@@ -1,0 +1,63 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Offer>
+@{
+    OnYourWay.Controllers.BaseController b = new OnYourWay.Controllers.BaseController();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>العروض</title>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم مقدم الخدمة</th>
+                        <th>اسم الزبون</th>
+                        <th>الوقت</th>
+                        <th>نوع الرحلة</th>
+                        <th>السعر</th>
+                        <th>البداية</th>
+                        <th>النهاية</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Client.Name</td>
+                            <td>@item.Trip.Customer.Name</td>
+                            <td>@(item.OfferDate != null ? ((DateTime)item.OfferDate).ToShortDateString() : "")</td>
+                            <td>@(item.Trip.CategoryID != null? item.Trip.MainCategory.NameAR:"")</td>
+                            <td>@item.Money</td>
+                            <td>@(item.Trip.StartPoint)</td>
+                            <td>@(item.Trip.EndPoint)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            if ("True"==="@(Model.FirstOrDefault()!=null&&Model.FirstOrDefault().Approved==true)") {
+                $("#orders>ul").css("display", "block");
+                $("#orders").addClass("active");
+                $("#FinishedOrders,#FinishedOrders>ul>li:nth-child(1)").addClass("active");
+            } else {
+                $("#orders>ul").css("display", "block");
+                $("#orders").addClass("active");
+                $("#CurrentOrders,#CurrentOrders>ul>li:nth-child(1)").addClass("active");
+            }
+           
+            var table = $("#mytable").DataTable();
+        });
+
+
+
+    </script>
+</body>
+</html>

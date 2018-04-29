@@ -1,0 +1,182 @@
+﻿@model OnYourWay.Models.ViewModels.AdminModel
+@{
+    
+}
+
+<div class="panel panel-flat">
+
+
+    <div class="panel-body">
+
+        <form class="form-horizontal UserForm" action="#">
+            <fieldset class="content-group">
+                @*<legend class="text-bold">Basic inputs</legend>*@
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">صورة المستخدم </label>
+                    <div class="col-lg-10">
+                        <input type="file" name="img" id="img" value="@Model.pass" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2">الاسم </label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="Viewname" value="@Model.name" id="Viewname">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-2">البريد الالكتروني</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="Viewmail" value="@Model.mail" id="Viewmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2"> رقم الجوال</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="phone" value="@Model.phone" id="phone">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:30px">
+                    <label class="control-label col-lg-2">كلمة المرور القديمة</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" name="oldpass" id="oldpass">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:30px">
+                    <label class="control-label col-lg-2">كلمة المرور الجديدة</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" name="Viewpass" id="Viewpass">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-2"> تاكيد كلمة المرور</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" name="ViewconPass" id="ViewconPass">
+                    </div>
+                </div>
+
+
+                <input type="button" style="width: 165px;margin-right: 414px;" id="btnUser" class="btn btn-success" value="تعديل المستخدم" />
+
+
+
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+<script src="~/Scripts/Additional-methods.js"></script>
+
+
+<input type="hidden" id="adminId" value="@Model.id" />
+<script>
+    $(document).ready(function () {
+
+        $(".UserForm").validate({
+            rules: {
+                Viewname: {
+                    required: true,
+                    // numberOnly: true
+                },
+
+                Viewmail: {
+                    required: true,
+                    email: true,
+                },
+                Viewpass: {
+                    //required: true,
+                    minlength: 6
+                },
+                ViewconPass: {
+                    minlength: 6,
+                    equalTo: "#Viewpass"
+                },
+                phone: {
+                    required: true,
+                    minlength: 10,
+                    numberOnly: true
+                },
+                pass: {
+                    minlength: 6,
+                },
+               oldpass: {
+                  // required: true,
+
+                }
+            },
+            messages: {
+                Viewpass: "من فضلك ادخل علي الاقل 6 حروف او ارقام",
+                Viewmail: "من فضلك ادخل البريد الالكتروني صحيحا",
+                ViewconPass: "من فضلك ادخل الرقم السري صحيحا",
+                Viewname: "من فضلك ادخل الاسم الخاص بك  ",
+                phone:"من فضلك ادخل رقم الجوال",
+                oldpass:"من فضلك ادخل كلمة السر القديمة"
+            }
+
+        });
+
+        $(document).on("click", "#btnUser",
+            function () {
+
+
+            //to prevent using arabic in mail
+            var t = $("#Viewmail").val();
+            var regex = /^[ A-Za-z0-9_@@./#&+-]*$/;
+            if (t.match(regex)) {
+
+                if ($(".UserForm").valid()) {
+
+
+
+                var user = document.getElementById("img").files[0];
+                var fd = new FormData();
+                fd.append("user", user);
+
+                fd.append("name", $("#Viewname").val());
+                fd.append("mail", $("#Viewmail").val());
+                fd.append("phone", $("#phone").val());
+                fd.append("pass", $("#Viewpass").val());
+                fd.append("oldpass", $("#oldpass").val());
+                fd.append("id", $("#adminId").val());
+
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("EditAdminData","Admin")',
+                        data: fd,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+
+                                if (data.success) {
+                                    window.location.href = "@Url.Action("Index","Admin")";
+                                } else {
+
+                                    toastr.error(data.error);
+
+
+                                }
+
+
+                        },
+                        error: function (error) {
+                            // alert("errror");
+
+                        }
+                    });
+                }
+            } else {
+                $(".valme").remove();
+                $("#Viewmail").after('<div class="valme"><label class="error">لا يمكنك استخدام هذة اللغة في البريد الالكتروني</label></div>');
+            }
+        });
+
+    });
+</script>

@@ -1,0 +1,190 @@
+﻿@model OnYourWay.Models.DBTables.AppSetting
+@{
+    ViewBag.Title = "الاعدادات";
+}
+
+<div class="panel panel-flat">
+    <div class="panel-body">
+        <div class="panel panel-flat">
+            <fieldset class="content-group">
+                <form class="form-group UserForm">
+                    <h2>بيانات الموقع</h2>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">عن الموقع بالعربي </label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="textAr">@Model.AboutAr</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">عن الموقع بالانجليزي </label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="textEn">@Model.AboutEn</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">عن الموقع بالاردو </label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="textOr">@Model.AboutOr</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">كيفية استخدام التطبيق بالعربي </label>
+                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="stepsAr">@Model.StepsAr</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">كيفية استخدام التطبيق بالانجليزي </label>                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="stepsEn">@Model.StepsEn</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">كيفية استخدام التطبيق بالاردو </label>                        <div class="col-lg-10">
+                            <textarea class="form-control" style="margin-bottom: 15px;" id="stepsOr">@Model.StepsOr</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">رقم التواصل </label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" style="margin-bottom: 15px;" name="phone1" id="phone1" value="@Model.Phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">البريد الالكتروني</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" style="margin-bottom: 15px;" name="mail" id="mail" value="@Model.Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">الفيس بوك</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" style="margin-bottom: 15px;" name="face" id="face" value="@Model.FaceBook">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">تويتر</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" style="margin-bottom: 15px;" name="twitter" id="twitter" value="@Model.Twitter">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">انستجرام</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" style="margin-bottom: 15px;" name="insta" id="insta" value="@Model.Instagram">
+                        </div>
+                    </div>
+
+                    <input type="button" style="width: 165px;margin:auto;display:table" id="btnAdd" class="btn btn-success" value="اضافة البيانات" />
+
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/Additional-methods.js"></script>
+<script>
+    $(document).ready(function () {
+        //$("#users>ul").css("display", "block");
+        $("#AppModel").addClass("active");
+        $(".UserForm").validate({
+            rules: {
+                textAr: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+                textEn: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+                textOr: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+                stepsAr: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+                stepsEn: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+                stepsOr: {
+                    required: true,
+
+                    // numberOnly: true
+                },
+
+                phone1: {
+                    required: true,
+                    numberOnly: true
+                },
+                mail: {
+                    required: true,
+                },
+                face: {
+                    required: true,
+                },
+                twitter: {
+                    required: true,
+                },
+                insta: {
+                    required: true,
+                },
+            },
+            messages: {
+                textAr: "من فضلك ادخل محتوي من نحن",
+                textEn: "من فضلك ادخل محتوي من نحن",
+                textOr: "من فضلك ادخل محتوي من نحن",
+                stepsAr: "من فضلك ادخل كيفية استخدام التطبيق",
+                stepsAr: "من فضلك ادخل كيفية استخدام التطبيق",
+                stepsAr: "من فضلك ادخل كيفية استخدام التطبيق",
+                phone1: "من فضلك ادخل رقم الجوال صحيحا",
+                mail: "من فضلك ادخل البريد الالكتروني صحيحا",
+                face: "من فضلك ادخل الفيس بوك صحيحا",
+                twitter: "من فضلك ادخل حساب تويتر صحيحا",
+                insta: "من فضلك ادخل حساب انستجرام صحيحا",
+
+            }
+
+        });
+        $("#btnAdd").click(function () {
+
+            if ($(".UserForm").valid()) {
+
+                var fd = new FormData();
+                fd.append("AboutAr", $("#textAr").val());
+                fd.append("AboutEn", $("#textEn").val());
+                fd.append("AboutOr", $("#textOr").val());
+                fd.append("StepsAr", $("#stepsAr").val());
+                fd.append("StepsEn", $("#stepsEn").val());
+                fd.append("StepsOr", $("#stepsOr").val());
+                fd.append("Phone", $("#phone1").val());
+                fd.append("Email", $("#mail").val());
+                fd.append("FaceBook", $("#face").val());
+                fd.append("Twitter", $("#twitter").val());
+                fd.append("Instagram", $("#insta").val());
+
+                $.ajax({
+                    url: "/About/EditSettings",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function (data) {
+                        toastr.success("تم اضافة البيانات بنجاح");
+                    }
+                })
+            }
+
+        });
+    });
+</script>
+ 

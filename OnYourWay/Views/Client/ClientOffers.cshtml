@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Offer>
+@{
+    OnYourWay.Controllers.BaseController b = new OnYourWay.Controllers.BaseController();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>العروض</title>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <label style="right: 30px;" class="label label-info">@(Model.FirstOrDefault() != null ? Model.FirstOrDefault().Client.Name : "")</label>
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم الزبون</th>
+                        <th>الوقت</th>
+                        <th>نوع الرحلة</th>
+                        <th>السعر</th>
+                        <th>الحالة</th>
+                        <th>البداية</th>
+                        <th>النهاية</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>@item.Trip.Customer.Name</td>
+                            <td>@(item.OfferDate!=null?((DateTime)item.OfferDate).ToShortDateString():"")</td>
+                            <td>@(item.Trip.CategoryID!=null?item.Trip.MainCategory.NameAR:"")</td>
+                            <td>@item.Money</td>
+                            <td>@(item.AcceptedTrips.Count>0?"تم الموافقة":"لم يتم رد")</td>
+                            <td>@(item.Trip.StartPoint)</td>
+                            <td>@(item.Trip.EndPoint)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#users>ul").css("display", "block");
+            $("#users").addClass("active");
+            $("#ShowClients,#ShowClients>ul>li:nth-child(1)").addClass("active");
+            var table = $("#mytable").DataTable();
+        });
+
+
+
+    </script>
+</body>
+</html>

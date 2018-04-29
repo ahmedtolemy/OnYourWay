@@ -1,0 +1,250 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<title>@ViewBag.Title</title>*@
+    <link rel="shortcut icon" href="~/Content/images/logo.png">
+
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="https://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/circle.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    <link href="/assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+    <!-- /global stylesheets -->
+    <!-- Core JS files -->
+    <script type="text/javascript" data-pace-options='{"ajax": false}' src="/assets/js/plugins/loaders/pace.min.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="/assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/loaders/blockui.min.js"></script>
+
+
+
+
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="/assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/tables/datatables/extensions/responsive.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="/assets/js/core/app.js"></script>
+    <script type="text/javascript" src="/assets/js/pages/datatables_responsive.js"></script>
+    <script src="/assets/js/pages/datatables_api.js"></script>
+
+    <!-- Theme JS files -->
+
+
+    <script type="text/javascript" src="/assets/js/pages/form_layouts.js"></script>
+    <!-- /theme JS files -->
+
+    <script>
+        $(function () {
+            $(".dataTables_filter>label > span").html("بــحث:");
+            $(".dataTables_length>label > span:first-child ").html("عدد النتائج :");
+            $(".dataTables_filter>label > input").attr("placeholder", "أكتب كلمة للبحث");
+
+
+        })
+    </script>
+
+
+</head>
+<body style="overflow-x:hidden;font-family: 'Cairo', sans-serif">
+    <div class="loade-fix" style="display:none;">
+        <div class="cssload-container">
+            <div class="cssload-whirlpool"></div>
+        </div>
+    </div>
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href=""><img src="~/Content/images/awameer.png" alt=""></a>
+            <ul class="nav navbar-nav visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+                <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav" style="float: left;">
+                <li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>
+                <li class="dropdown dropdown-user">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="@(Url.Content("~")+"Content/userImages/"+User.Identity.GetImgUrl())" class="img-circle img-sm" alt="">
+                        <span>@User.Identity.Name</span>
+                        <i class="caret"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="@Url.Action("LogOff","Account")" id="btnLogoff"><i class="icon-switch2"></i> تسجيل خروج</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page container -->
+    <div class="page-container">
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-main">
+                <div class="sidebar-content">
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="category-content">
+                            <div class="media">
+                                <a href="#" class="media-left"><img src="@(Url.Content("~")+"Content/userImages/"+User.Identity.GetImgUrl())" class="img-circle img-sm" alt=""></a>
+                                <div class="media-body">
+                                    <span class="media-heading text-semibold">@User.Identity.Name</span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /user menu -->
+                    <!-- Main navigation -->
+                    <div class="sidebar-category sidebar-category-visible">
+                        <div class="category-content no-padding">
+
+                            <ul class="navigation navigation-main navigation-accordion">
+                                <!-- Main -->
+                                <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
+                                <li id="Index"><a href="@Url.Action("Index","Home")"><i class="icon-home4"></i> <span>الرئيسية</span></a></li>
+                                <li id="users">
+                                    <a href="#"><i class="icon-people"></i> <span>المستخدمين</span></a>
+                                    <ul>
+                                        <li id="ShowAdmins"><a href="@Url.Action("Index","Admin")">المدراء</a></li>
+                                        <li id="ShowProviders"><a href="@Url.Action("Index","Client")">مقدمين الخدمة</a></li>
+                                        <li id="ShowClients"><a href="@Url.Action("Index","Customer")">الزبائن</a></li>
+                                    </ul>
+                                </li>
+                                <li id="showategories"><a href="@Url.Action("Index","Category")"><i class="fa fa-clone"></i> <span>الاقسام</span></a></li>
+                                <li id="showDepts"><a href="@Url.Action("Index","Car")"><i class="icon-car"></i> <span>السيارات</span></a></li>
+                                <li id="cities"><a href="@Url.Action("Index","City")"><i class="icon-location3"></i> <span>المدن</span></a></li>
+                                <li id="orders">
+                                    <a href="#"><i class="icon-stack"></i> <span>الطلبات</span></a>
+                                    <ul>
+                                        <li id="CurrentOrders"><a href="@Url.Action("Active","Order")"> الطلبات الجارية</a></li>
+                                        <li id="FinishedOrders"><a href="@Url.Action("Finish","Order")">الطلبات المنتهية</a></li>
+                                    </ul>
+                                </li>
+                                <li id="advert">
+                                    <a href="#"><i class="fa fa-plane"></i> <span>الرحلات</span></a>
+                                    <ul>
+                                        <li id="ShowCurrentAdverts"><a href="@Url.Action("Active","Trip")"> الرحلات الجارية</a></li>
+                                        <li id="ShowDoneAdverts"><a href="@Url.Action("Finish","Trip")">الرحلات المنتهية</a></li>
+                                    </ul>
+                                </li>
+                                <li id="ShowComplains"><a href="@Url.Action("Complains","Complain")"><i class="icon-mail-read"></i> <span> الشكاوي</span></a></li>
+                                <li id="AppSettings"><a href="@Url.Action("Index","About")"><i class="icon-sync"></i> <span>الاعدادت</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /main navigation -->
+                </div>
+            </div>
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="content-wrapper">
+                <!-- Page header -->
+                <div class="page-header">
+
+                    <div class="breadcrumb-line">
+                        <ul class="breadcrumb">
+                            <li><a href="/Admin/Index"><i class="icon-home2 position-left"></i></a> لوحة تحكم الموقع</li>
+                            @*<li class="active">Dashboard</li>*@
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /page header -->
+                <!-- Dashboard content -->
+
+                <div class="content">
+                    <div class="panel panel-flat" style="padding: 10px;">
+                        @RenderBody()
+                    </div>
+                </div>
+
+                <!-- /dashboard content -->
+
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /page content -->
+    <!-- Core JS files -->
+
+    <script src="~/Scripts/toastr.min.js"></script>
+
+
+
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <!-- /theme JS files -->
+    <script>
+        $(function () {
+
+
+
+            $("#btnLogoff").click(function () {
+
+                $.ajax({
+                    url: "/Account/LogOff",
+                    dataType: "json",
+                    type: "POST",
+                    success: function () {
+                        window.location.href = "/Account/Login";
+                    }
+                });
+            });
+
+
+
+
+
+            $("#signOut").click(function () {
+                $.ajax({
+                    url: "/Account/LogOff",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.href = data.url;
+                    }
+                });
+            });
+
+
+            $(document).ajaxStart(function () {
+                $(".loade-fix").fadeIn(0);
+            });
+            $(document).ajaxStop(function () {
+                $(".loade-fix").fadeOut(0);
+            });
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>

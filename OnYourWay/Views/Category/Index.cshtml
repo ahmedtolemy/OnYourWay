@@ -1,0 +1,358 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Category>
+
+@{
+    OnYourWay.Controllers.BaseController b = new OnYourWay.Controllers.BaseController();
+    var routeid = Url.RequestContext.RouteData.Values["id"] != null ? @Url.RequestContext.RouteData.Values["id"].ToString() : null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الاقسام</title>
+</head>
+<body>
+
+    <div class="panel panel-flat">
+
+
+        <div class="panel-body">
+            @if (routeid!=null)
+            {
+                <input style="right: 30px;" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info" value="اضافة قسم جديد" />
+            }
+
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم القسم بالعربي</th>
+                        <th>اسم القسم بالانجليزي</th>
+                        <th>اسم القسم بالاردو</th>
+                        <th>الحالة</th>
+                        <th> تعديل</th>
+                        <th>تغير الحالة</th>
+                        <th>أقسام فرعية</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.NameAR</td>
+                            <td>@item.NameEN</td>
+                            <td>@item.NameOR</td>
+                            @if (item.Block == true)
+                            {
+                                <td id="@item.ID"><span class="label label-danger" style="width:70px">غير مفعلة</span></td>
+                            }
+                            else
+                            {
+                                <td id="@item.ID"><span class="label label-success" style="width:70px">مفعلة</span></td>
+                            }
+
+
+                            <td>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal-@item.ID" data-emp-id="@item.ID"> تعديل</button>
+                                <div id="myModal-@item.ID" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">تعديل القسم</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="form-horizontal EditForm" action="#">
+                                                    <fieldset class="content-group">
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-2">اسم القسم بالعربي </label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control citNamAr-@item.ID" value="@item.NameAR">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-2">اسم القسم بالانجليزي </label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control citNamEn-@item.ID" value="@item.NameEN">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-2">اسم القسم بالاردو </label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control citNamOr-@item.ID" value="@item.NameOR">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="button" style="width: 165px;margin-right: 70px;" class="btn btn-success btnEditCity" data-id="@item.ID" value="تعديل القسم" />
+                                                        </div>
+
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td>
+
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                            <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حذف</button></li>
+                                            @if (item.Block == true)
+                                            {
+                                                <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">تفعيل</button></li>
+
+                                            }
+                                            else
+                                            {
+
+                                                <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حظر</button></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
+                            </td>
+                            <td><a href="@(Url.Content("~"))Category/Index/@item.ID" class="btn btn-info">الاقسام الفرعية</a></td>
+                        </tr>
+
+
+
+
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">اضافة قسم جديدة</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal UserForm" action="#">
+                        <fieldset class="content-group">
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">اسم القسم بالعربي </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="cityNameAr" id="cityNameAr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">اسم القسم بالانجليزي </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="cityNameEn" id="cityNameEn">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">اسم القسم بالاردو </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="cityNameOr" id="cityNameOr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" style="width: 165px;margin-right: 70px;" id="btnCity" class="btn btn-success" value="اضافة القسم" />
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <script src="~/Scripts/Additional-methods.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            $("#showategories").addClass("active");
+            $(".UserForm").validate({
+                rules: {
+                    cityNameAr: {
+                        required: true,
+
+                    },
+                    cityNameEn: {
+                        required: true,
+
+                    },
+                    cityNameOr: {
+                        required: true,
+
+                    },
+                },
+                messages: {
+
+                    cityNameAr: "من فضلك ادخل اسم القسم  ",
+                    cityNameEn: "من فضلك ادخل اسم القسم  ",
+                    cityNameOr: "من فضلك ادخل اسم القسم  ",
+
+                }
+
+            });
+
+            $("#btnCity").click(function () {
+                debugger;
+                     var Categoryid =@(routeid==null?"null":routeid);
+               
+                if ($(".UserForm").valid()) {
+                    $.ajax({
+                        url: '@Url.Action("Add","Category")',
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            nameAr: $("#cityNameAr").val(),
+                            nameEn: $("#cityNameEn").val(),
+                            nameOr: $("#cityNameOr").val(),
+                            Categoryid:parseInt(Categoryid)
+                        },
+                        success: function () {
+                            location.reload();
+                        }
+                    })
+                }
+
+            });
+
+
+            $(document).on("click", ".btnEditCity", function () {
+
+                var btn = $(this);
+                var inputIDA = ".citNamAr-" + btn.attr("data-id");
+                var inputIDE = ".citNamEn-" + btn.attr("data-id");
+                var inputIDO = ".citNamOr-" + btn.attr("data-id");
+                //alert(btn.attr("data-id") + "=>" + $(inputID).val())
+
+                $.ajax({
+                    url: '@Url.Action("Edit","Category")',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        id: btn.attr("data-id"),
+                        nameAr: $(inputIDA).val(),
+                        nameEn: $(inputIDE).val(),
+                        nameOr: $(inputIDO).val(),
+                    },
+                    success: function () {
+                        location.reload();
+                    }
+                })
+
+            });
+            var table = $("#mytable").DataTable();
+            $("#mytable").on("click", ".blockUser",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Block","Category")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        var myid = "#" + data.id;
+                                        $(myid).empty();
+                                        if (data.status) {
+                                            $(myid).append('<span class="label label-danger"style="width:70px">غير مفعلة</span>');
+                                            toastr.warning("تم  حظر المستخدم");
+                                            button.text("الغاء حظر");
+                                        } else {
+
+                                            $(myid).append('<span class="label label-success"style="width:70px">مفعلة</span>');
+                                            toastr.warning("تم الغاء حظر المستخدم");
+                                            button.text(" حظر");
+                                        }
+
+
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+                });
+            $("#mytable").on("click", ".del",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Delete","Category")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        location.reload();
+
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                });
+
+        });
+
+    </script>
+
+</body>
+</html>

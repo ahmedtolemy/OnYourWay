@@ -1,0 +1,166 @@
+﻿@model List<OnYourWay.Models.DBTables.Customer>
+@using OnYourWay.Controllers;
+@{ 
+    BaseController b = new BaseController();
+} 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الزبائن</title>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            @*<input style="right: 30px;" type="button" id="goUser" class="btn btn-info" value="اضافة زبون" />*@
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>الصورة </th>
+                        <th>اسم الزبون</th>
+                        <th>رقم الجوال </th>
+                        <th>المدينة</th>
+                        <th>الحالة</th>
+                        <th>الرحلات</th>
+                        <th>تغير الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center"><img class="img-circle" style="width:70px;height:70px;" src="@(Url.Content("~")+"Content/customerimages/"+item.ImgUrl)" /></td>
+                            <td>@item.Name</td>
+                            <td>@item.Mobile</td>
+                            <td>@(item.City != null ? item.City.NameAR : "")</td>
+                            @if (item.Block == true)
+                            {
+                                <td id="@item.ID"><span class="label label-danger" style="width:70px">غير فعال</span></td>
+                            }
+                            else
+                            {
+                                <td id="@item.ID"> <span class="label label-success" style="width:70px">فعال</span></td>
+                            }
+                            <td><a href="@(Url.Action("CustomerTrips","Customer",new { id=item.ID}))" class="btn btn-info">الرحلات</a></td>
+                            <td>
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                            <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حذف</button></li>
+                                            @if (item.Block == true)
+                                            {
+                                                <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">الغاء الحظر</button></li>
+                                            }
+                                            else
+                                            {
+                                                <li><button class="btn btn-danger blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حظر</button></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#users>ul").css("display", "block");
+            $("#users").addClass("active");
+            $("#ShowClients,#ShowClients>ul>li:nth-child(1)").addClass("active");
+            var table = $("#mytable").DataTable();
+            $("#mytable").on("click", ".del",
+                function () {
+                    var button = $(this);
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+                        message: "هل انت متأكد انك تريد حذف هذا العنصر؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Delete","Customer")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        table.row(button.parent().parent().parent().parent().parent().parent()).remove().draw();
+                                        toastr.warning("تم حذف العنصر");
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+                });
+            $("#mytable").on("click", ".blockUser",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Block", "Customer")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        var myid = "#" + data.id;
+                                        $(myid).empty();
+                                        if (data.status) {
+                                            $(myid).append('<span class="label label-danger"style="width:70px">غير فعال</span>');
+                                            toastr.warning("تم  حظر المستخدم");
+                                            button.text("الغاء حظر");
+                                        } else {
+                                            $(myid).append('<span class="label label-success"style="width:70px">فعال</span>');
+                                            toastr.warning("تم الغاء حظر المستخدم");
+                                            button.text(" حظر");
+                                        }
+
+
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                });
+
+
+
+            @*$("#goUser").click(function () {
+
+                window.location.href = "@Url.Action("Add","Customer")";
+
+            });*@
+
+        });
+
+
+
+    </script>
+</body>
+</html>

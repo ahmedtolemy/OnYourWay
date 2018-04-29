@@ -1,0 +1,120 @@
+﻿@model OnYourWay.Models.ViewModels.DashBoard
+    <head><title>الرئيسية</title></head>
+<div class="panel panel-flat">
+
+
+    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="clearfix">
+
+                <div class="row">
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.admins</span>
+                                <h4>المديرين</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-users" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.clients</span>
+                                <h4>مقدمين الخدمة</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-briefcase" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.customers</span>
+                                <h4>العملاء</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.donetrips</span>
+                                <h4>الرحلات المنتهية</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.trips</span>
+                                <h4> الرحلات الجارية</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-ambulance" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.offers</span>
+                                <h4>العروض</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-first-order" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.complains</span>
+                                <h4>الشكاوي</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.main_category</span>
+                                <h4>الاقسام الرئيسية</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-clone" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="block-item">
+                            <div class="col-xs-4">
+                                <span>@Model.category</span>
+                                <h4>الاقسام الفرعية</h4>
+                            </div>
+                            <div class="col-xs-8">
+                                <i class="fa fa-clone" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,283 @@
+﻿@model List<OnYourWay.Models.ApplicationUser>
+@{
+    var boo = User.IsInRole("Manager");
+}
+
+<head>
+    <title>المديرين</title>
+</head>
+
+<div class="panel panel-flat">
+
+
+    <div class="panel-body">
+
+        <input style="right: 30px;" type="button" id="goUser" class="btn btn-info" value="اضافة مدير جديد" />
+
+        <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+            <thead class="bg-info-700">
+                <tr>
+                    <th>الصورة </th>
+                    <th>اسم المدير</th>
+                    <th>رقم الجوال </th>
+                    <th>البريد الالكتروني</th>
+                    <th>الحالة</th>
+                    <th> تعديل</th>
+                    <th>تغير الحالة</th>
+                </tr>
+            </thead>
+            <tbody id="mylst">
+                @foreach (var item in Model)
+                {
+                    if (!item.Roles.Select(a => a.RoleId).Contains("2"))
+                    {
+                        <tr>
+                            <td style="text-align:center"><img class="img-circle" style="width:70px;height:70px;" src="~/Content/userImages/@item.ImageUrl" /></td>
+
+                            <td>@item.UserName</td>
+
+                            <td>@item.PhoneNumber</td>
+
+
+                            <td>@item.Email</td>
+                            @if (item.Active)
+                            {
+                                <td id="@item.Id"> <span class="label label-success" style="width:70px">فعال</span></td>
+                            }
+                            else
+                            {
+                                <td id="@item.Id"><span class="label label-danger" style="width:70px">غير فعال</span></td>
+                            }
+
+                            <td><button class="btn btn-primary  Edit" data-emp-id="@item.Id"> تعديل</button></td>
+
+                            <td>
+                                @if (item.UserName == User.Identity.Name)
+                                {
+                                    <span>المستخدم الحالي</span>
+                                }
+                                else
+                                {
+
+
+                                    <ul class="icons-list">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                <i class="icon-menu9"></i>
+                                            </a>
+
+                                            <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                                <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حذف</button></li>
+                                                @if (item.Active)
+                                                {
+                                                    <li><button class="btn btn-danger blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حظر</button></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">الغاء الحظر</button></li>
+
+                                                }
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        if (boo)
+                        {
+                            <tr>
+                                <td style="text-align:center"><img class="img-circle" style="width:70px;height:70px;" src="~/Content/userImages/@item.ImageUrl" /></td>
+
+                                <td>@item.UserName</td>
+
+                                <td>@item.PhoneNumber</td>
+
+
+                                <td>@item.Email</td>
+                                @if (item.Active)
+                                {
+                                    <td id="@item.Id"> <span class="label label-success" style="width:70px">فعال</span></td>
+                                }
+                                else
+                                {
+                                    <td id="@item.Id"><span class="label label-danger" style="width:70px">غير فعال</span></td>
+                                }
+
+                                <td><button class="btn btn-primary  Edit" data-emp-id="@item.Id"> تعديل</button></td>
+
+                                <td>
+                                    @if (item.UserName == User.Identity.Name)
+                                    {
+                                        <span>المستخدم الحالي</span>
+                                    }
+                                    else
+                                    {
+
+
+                                        <ul class="icons-list">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="icon-menu9"></i>
+                                                </a>
+
+                                                <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                                    <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حذف</button></li>
+                                                    @if (item.Active)
+                                                    {
+                                                        <li><button class="btn btn-danger blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حظر</button></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">الغاء الحظر</button></li>
+
+                                                    }
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+
+                    }
+
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+
+    $("#users>ul").css("display", "block");
+    $("#users").addClass("active");
+    $("#ShowAdmins,#ShowAdmins>ul>li:nth-child(1)").addClass("active");
+
+    var table= $("#mytable").DataTable();
+
+
+
+    $("#mytable").on("click", ".del",
+          function () {
+        var button = $(this);
+
+        //alert(button.attr("data-emp-id"));
+        bootbox.confirm({
+
+            message: "هل انت متأكد انك تريد حذف هذا العنصر؟",
+            callback: function (result) {
+                /* result is a boolean; true = OK, false = Cancel*/
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteUser","Admin")",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: button.attr("data-emp-id")
+                        },
+                        success: function (data) {
+                            table.row(button.parent().parent().parent().parent().parent().parent()).remove().draw();
+                            toastr.warning("تم حذف العنصر");
+                        },
+                        error: function (data) {
+                            bootbox.alert("Error on server");
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+    });
+
+
+
+    $("#mytable").on("click", ".blockUser",
+         function () {
+        var button = $(this);
+
+        //alert(button.attr("data-emp-id"));
+        bootbox.confirm({
+
+            message: "هل انت متأكد ؟",
+            callback: function (result) {
+                /* result is a boolean; true = OK, false = Cancel*/
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("BlockUser","Admin")",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: button.attr("data-emp-id")
+                        },
+                        success: function (data) {
+                            var myid = "#" + data.id;
+                            $(myid).empty();
+                            if (data.status) {
+                                $(myid).append('<span class="label label-success"style="width:70px">فعال</span>');
+                                toastr.warning("تم الغاء حظر المستخدم");
+                                button.text(" حظر");
+                            } else {
+                                $(myid).append('<span class="label label-danger"style="width:70px">غير فعال</span>');
+                                toastr.warning("تم  حظر المستخدم");
+                                button.text("الغاء حظر");
+                            }
+
+
+                        },
+                        error: function (data) {
+                            bootbox.alert("Error on server");
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+    });
+
+
+    $("#mytable").on("click", ".Edit",
+           function () {
+               var button = $(this);
+
+               window.location.href = "@Url.Action("EditAdmin","Admin")/" + button.attr("data-emp-id");
+
+           });
+
+    $("#goUser").click(function () {
+
+    window.location.href ="@Url.Action("AddAdmin","Admin")" ;
+
+    });
+
+});
+
+
+
+</script>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Trip>
+@{
+    OnYourWay.Controllers.BaseController b = new OnYourWay.Controllers.BaseController();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الرحلات</title>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم الزبون</th>
+                        <th>الوقت</th>
+                        <th>نوع الرحلة</th>
+                        <th>عدد العروض</th>
+                        <th>البداية</th>
+                        <th>النهاية</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.Customer!=null?item.Customer.Name:"")</td>
+                            <td>@(item.Start != null ? ((DateTime)item.Start).ToShortDateString() : "")</td>
+                            <td>@(item.CategoryID!=null?item.MainCategory.NameAR:"")</td>
+                            <td>@item.Offers.Count()</td>
+                            <td>@(item.StartPoint)</td>
+                            <td>@(item.EndPoint)</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            if ("False"==="@(Model.FirstOrDefault()!=null&&(Model.FirstOrDefault().Status!=3&&Model.FirstOrDefault().Status!=4))") {
+                $("#advert>ul").css("display", "block");
+                $("#advert").addClass("active");
+                $("#ShowDoneAdverts,#ShowDoneAdverts>ul>li:nth-child(1)").addClass("active");
+            } else {
+                $("#advert>ul").css("display", "block");
+                $("#advert").addClass("active");
+                $("#ShowCurrentAdverts,#ShowCurrentAdverts>ul>li:nth-child(1)").addClass("active");
+            }
+
+            var table = $("#mytable").DataTable();
+        });
+    </script>
+</body>
+</html>

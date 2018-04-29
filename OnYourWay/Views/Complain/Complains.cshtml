@@ -1,0 +1,90 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Complain>
+
+@{
+    OnYourWay.Controllers.BaseController b = new OnYourWay.Controllers.BaseController();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>الشكاوي</title>
+</head>
+
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم</th>
+                        <th>الايميل</th>
+                        <th>الوقت</th>
+                        <th>الشكوي</th>
+                        <th>نوع العميل</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.Client!=null?item.Client.Name:item.Customer.Name)</td>
+                            <td>@item.Email</td>
+                            <td>@item.Created_at</td>
+                           <td>@item.complain</td>
+                            <td>
+                            @(item.PersonType==(int)OnYourWay.Controllers.BaseController.PersonType.Client?"مقدم الخدمة":
+                       item.PersonType == (int)OnYourWay.Controllers.BaseController.PersonType.Customer?"عميل":"" )</td>
+                            <td><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حذف</button></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#ShowComplains").addClass("active");
+            var table = $("#mytable").DataTable();
+             $("#mytable").on("click", ".del",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Delete","Complain")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        location.reload();
+
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                });
+        });
+
+
+
+    </script>
+</body>
+</html>
