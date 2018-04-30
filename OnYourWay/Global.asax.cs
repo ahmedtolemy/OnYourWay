@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Http;
-
+using OnYourWay.Models;
+using System.Data.Entity;
 
 namespace OnYourWay
 {
@@ -18,6 +19,7 @@ namespace OnYourWay
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer(new DefaultData());
         }
     }
 }

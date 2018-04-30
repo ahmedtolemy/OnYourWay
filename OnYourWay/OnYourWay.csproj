@@ -252,6 +252,7 @@
     <Compile Include="Models\DBTables\Offer.cs" />
     <Compile Include="Models\DBTables\Rating.cs" />
     <Compile Include="Models\DBTables\Trip.cs" />
+    <Compile Include="Models\DefaultData.cs" />
     <Compile Include="Models\Extensisons\IdentityExtensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\OnYourWay.4hoste.com - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
