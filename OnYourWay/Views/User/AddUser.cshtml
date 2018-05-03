@@ -1,5 +1,5 @@
 ﻿<head>
-    اضافة مدير
+    اضافة مستخدم
 </head>
 
 <div class="panel panel-flat">
@@ -136,7 +136,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "@Url.Action("RegisterAdmin", "Admin")",
+                        url: "@Url.Action("RegisterUser", "User")",
                         data: fd,
                         dataType: 'json',
                         contentType: false,
@@ -144,7 +144,7 @@
                         success: function (data) {
                             if (data.success) {
                                 if (data.success) {
-                                    window.location.href = "@Url.Action("Index","Admin")";
+                                    window.location.href = "@Url.Action("Index","User")";
                                 } else {
                                     $.each(data.errors,
                                         function (i, value) {
@@ -187,5 +187,7 @@
 
     });
 </script>
+
+
 
 

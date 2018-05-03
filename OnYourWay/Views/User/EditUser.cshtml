@@ -1,6 +1,7 @@
-﻿<head>
-    اضافة مدير
-</head>
+﻿@model OnYourWay.Models.ViewModels.AdminModel
+@{
+
+}
 
 <div class="panel panel-flat">
 
@@ -9,35 +10,43 @@
 
         <form class="form-horizontal UserForm" action="#">
             <fieldset class="content-group">
+                @*<legend class="text-bold">Basic inputs</legend>*@
 
                 <div class="form-group">
                     <label class="control-label col-lg-2">صورة المستخدم </label>
                     <div class="col-lg-10">
-                        <input type="file" name="img" id="img" class="form-control">
+                        <input type="file" name="img" id="img" value="@Model.pass" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-2">الاسم </label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="Viewname" id="Viewname">
+                        <input type="text" class="form-control" name="Viewname" value="@Model.name" id="Viewname">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-lg-2">البريد الالكتروني</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="Viewmail" id="Viewmail">
+                        <input type="text" class="form-control" name="Viewmail" value="@Model.mail" id="Viewmail">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-2"> رقم الجوال</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="phone" id="phone">
+                        <input type="text" class="form-control" name="phone" value="@Model.phone" id="phone">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-top:30px">
-                    <label class="control-label col-lg-2">كلمة المرور</label>
+                    <label class="control-label col-lg-2">كلمة المرور القديمة</label>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control" name="oldpass" id="oldpass">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:30px">
+                    <label class="control-label col-lg-2">كلمة المرور الجديدة</label>
                     <div class="col-lg-10">
                         <input type="password" class="form-control" name="Viewpass" id="Viewpass">
                     </div>
@@ -50,7 +59,7 @@
                 </div>
 
 
-                <input type="button" style="width: 165px;margin-right: 414px;" id="btnUser" class="btn btn-success" value="اضافة المستخدم" />
+                <input type="button" style="width: 165px;margin-right: 414px;" id="btnUser" class="btn btn-success" value="تعديل المستخدم" />
 
 
 
@@ -61,17 +70,12 @@
 </div>
 
 
-
-
 <script src="~/Scripts/jquery.validate.min.js"></script>
 
 <script src="~/Scripts/Additional-methods.js"></script>
 
 
-
-
-
-
+<input type="hidden" id="adminId" value="@Model.id" />
 <script>
     $(document).ready(function () {
 
@@ -99,8 +103,12 @@
                     minlength: 10,
                     numberOnly: true
                 },
-                img: {
-                    required: true,
+                pass: {
+                    minlength: 6,
+                },
+               oldpass: {
+                  // required: true,
+
                 }
             },
             messages: {
@@ -109,12 +117,13 @@
                 ViewconPass: "من فضلك ادخل الرقم السري صحيحا",
                 Viewname: "من فضلك ادخل الاسم الخاص بك  ",
                 phone:"من فضلك ادخل رقم الجوال",
-                img:"من فضلك قم برفع صورة المستخدم"
+                oldpass:"من فضلك ادخل كلمة السر القديمة"
             }
 
         });
 
-        $("#btnUser").click(function () {
+        $(document).on("click", "#btnUser",
+            function () {
 
 
             //to prevent using arabic in mail
@@ -124,40 +133,37 @@
 
                 if ($(".UserForm").valid()) {
 
-                    var user = document.getElementById("img").files[0];
-                    var fd = new FormData();
-                    fd.append("user", user);
 
-                    fd.append("FullName", $("#Viewname").val());
-                    fd.append("Email", $("#Viewmail").val());
-                    fd.append("Password", $("#Viewpass").val());
-                    fd.append("ConfirmPassword", $("#ViewconPass").val());
-                    fd.append("phone", $("#phone").val());
+
+                var user = document.getElementById("img").files[0];
+                var fd = new FormData();
+                fd.append("user", user);
+
+                fd.append("name", $("#Viewname").val());
+                fd.append("mail", $("#Viewmail").val());
+                fd.append("phone", $("#phone").val());
+                fd.append("pass", $("#Viewpass").val());
+                fd.append("oldpass", $("#oldpass").val());
+                fd.append("id", $("#adminId").val());
 
                     $.ajax({
                         type: "POST",
-                        url: "@Url.Action("RegisterAdmin", "Admin")",
+                        url: '@Url.Action("EditUserData", "User")',
                         data: fd,
                         dataType: 'json',
                         contentType: false,
                         processData: false,
                         success: function (data) {
-                            if (data.success) {
+
                                 if (data.success) {
-                                    window.location.href = "@Url.Action("Index","Admin")";
+                                    window.location.href = "@Url.Action("Index","User")";
                                 } else {
-                                    $.each(data.errors,
-                                        function (i, value) {
-                                            toastr.error(value);
-                                        });
+
+                                    toastr.error(data.error);
+
 
                                 }
-                            } else {
-                                $.each(data.errors,
-                                            function (i, value) {
-                                                toastr.error(value);
-                                            });
-                            }
+
 
                         },
                         error: function (error) {
@@ -166,26 +172,11 @@
                         }
                     });
                 }
-
-
-
             } else {
-
-
                 $(".valme").remove();
                 $("#Viewmail").after('<div class="valme"><label class="error">لا يمكنك استخدام هذة اللغة في البريد الالكتروني</label></div>');
-
-
-
             }
-
-
-
-
-
         });
 
     });
 </script>
-
-

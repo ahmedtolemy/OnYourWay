@@ -53,6 +53,10 @@ namespace OnYourWay.Models.DBTables
         public int? Type { get; set; }
         [MaxLength(20)]
         public string CarModel { get; set; }
+        [MaxLength(128)]
+        public string UserID { get; set; }
+        [ForeignKey("UserID")]
+        public ApplicationUser User { get; set; }
         public int? CarTypeID { get; set; }
         [ForeignKey("CompanyID")]
         public Company Company { get; set; }
@@ -64,6 +68,7 @@ namespace OnYourWay.Models.DBTables
         public List<Offer> Offers { get; set; }
         public List<Complain> Complains { get; set; }
         public ICollection<Category> Categories { get; set; }
+        public List<Subscription> subscriptions { get; set; }
 
     }
 }

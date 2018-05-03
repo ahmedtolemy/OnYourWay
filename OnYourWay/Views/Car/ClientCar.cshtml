@@ -1,0 +1,54 @@
+﻿@model IEnumerable<OnYourWay.Models.DBTables.Client>
+<html></html>
+<head>
+    <title>سيارات المستخدمين</title>
+</head>
+<body>
+
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم مقدم الخدمة</th>
+                        <th>الهاتف</th>
+                        <th>شركة السيارة</th>
+                        <th>رقم السيارة</th>
+                        <th>حروف السيارة</th>
+                        <th>نوع السيارة</th>
+                        <th>الموديل</th>
+                        <th> عدد الكراسي</th>
+                        <th>اللون</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Mobile</td>
+                        <td>@item.CarType.CarCompany.NameAR</td>
+                        <td>@item.PlateNumber</td>
+                        <td>@item.PlateChars</td>
+                        <td>@item.CarType.NameAR</td>
+                        <td>@item.CarModel</td>
+                        <td>@item.CarSeats</td>
+                        <td>@item.CarColor</td>
+                    </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/Additional-methods.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#cities").addClass("active");
+        });
+    </script>
+</body>
+
+

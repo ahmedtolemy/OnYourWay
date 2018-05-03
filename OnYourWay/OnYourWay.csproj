@@ -227,6 +227,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\TripController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -251,6 +252,7 @@
     <Compile Include="Models\DBTables\Customer.cs" />
     <Compile Include="Models\DBTables\Offer.cs" />
     <Compile Include="Models\DBTables\Rating.cs" />
+    <Compile Include="Models\DBTables\Subscription.cs" />
     <Compile Include="Models\DBTables\Trip.cs" />
     <Compile Include="Models\Extensisons\IdentityExtensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -4780,6 +4782,10 @@
     <Content Include="starters\assets\less\core\variables\core-variables.less" />
     <Content Include="starters\assets\less\core\variables\variables.less" />
     <Content Include="starters\package.json" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\Car\ClientCar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

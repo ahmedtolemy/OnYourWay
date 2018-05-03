@@ -85,6 +85,15 @@ namespace OnYourWay.Controllers
             }
 
         }
+
+        public ActionResult ClientCar()
+        {
+            using (ApplicationDbContext db=new ApplicationDbContext())
+            {
+                var cars = db.Clients.Where(a => a.CarTypeID != null).Include(a=>a.CarType.CarCompany).ToList();
+                return View(cars);
+            }
+        }
         #region cartypesactions
         public ActionResult CarTypes(int? id)
         {
@@ -165,6 +174,6 @@ namespace OnYourWay.Controllers
 
         }
         #endregion
-
+        
     }
 }

@@ -1,0 +1,271 @@
+﻿@model List<OnYourWay.Models.ApplicationUser>
+@{
+
+}
+
+<head>
+    <title>المستخدمين</title>
+</head>
+<div class="panel panel-flat">
+
+
+    <div class="panel-body">
+
+        <input style="right: 30px;" type="button" id="goUser" class="btn btn-info" value="اضافة مدير جديد" />
+
+        <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+            <thead class="bg-info-700">
+                <tr>
+                    <th>الصورة </th>
+                    <th>اسم المدير</th>
+                    <th>رقم الجوال </th>
+                    <th>البريد الالكتروني</th>
+                    <th>المحفظة</th>
+                    <th>عدد الاشتراكات</th>
+                    <th>الحالة</th>
+                    <th>تعديل الاشتراكات</th>
+                    <th> تعديل</th>
+                    <th>تغير الحالة</th>
+                </tr>
+            </thead>
+            <tbody id="mylst">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center"><img class="img-circle" style="width:70px;height:70px;" src="~/Content/userImages/@item.ImageUrl" /></td>
+
+                        <td>@item.UserName</td>
+
+                        <td>@item.PhoneNumber</td>
+
+
+                        <td>@item.Email</td>
+                        <td>@item.Balance</td>
+                        <td>@item.Subscription_count</td>
+                        @if (item.Active)
+                        {
+                            <td id="@item.Id"> <span class="label label-success" style="width:70px">فعال</span></td>
+                        }
+                        else
+                        {
+                            <td id="@item.Id"><span class="label label-danger" style="width:70px">غير فعال</span></td>
+                        }
+                            <td>
+                                <button class="btn btn-primary  Subscription" data-emp-id="@item.Id"> تعديل الاشتراك</button>
+                                <div id="myModal-@item.Id" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">تعديل الاشتراك</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="form-horizontal EditForm" action="#">
+                                                    <fieldset class="content-group">
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-2">عدد الاشتراكات </label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control citNamAr-@item.Id" value="@item.Subscription_count">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-2">المحفظة </label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control citNamEn-@item.Id" value="@item.Balance">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="button" style="width: 165px;margin-right: 70px;" class="btn btn-success btnEditCity" data-id="@item.Id" value="تعديل الاشتراك" />
+                                                        </div>
+
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                        <td><button class="btn btn-primary  Edit" data-emp-id="@item.Id"> تعديل</button></td>
+                        <td>
+                            <ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-menu9"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                        <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حذف</button></li>
+                                        @if (item.Active)
+                                        {
+                                            <li><button class="btn btn-danger blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">حظر</button></li>
+                                        }
+                                        else
+                                        {
+                                            <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.Id">الغاء الحظر</button></li>
+
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+<script>
+$(document).ready(function () {
+
+    $("#users>ul").css("display", "block");
+    $("#users").addClass("active");
+    $("#ShowUsers,#ShowUsers>ul>li:nth-child(1)").addClass("active");
+
+    var table= $("#mytable").DataTable();
+
+    $(document).on("click", ".btnEditCity", function () {
+
+                var btn = $(this);
+                var inputIDA = ".citNamAr-" + btn.attr("data-id");
+                var inputIDE = ".citNamEn-" + btn.attr("data-id");
+                $.ajax({
+                    url: '@Url.Action("EditSub","User")',
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        id: btn.attr("data-id"),
+                        count: $(inputIDA).val(),
+                        balance: $(inputIDE).val()
+                    },
+                    success: function () {
+                        location.reload();
+                    }
+                })
+
+            });
+
+
+    $("#mytable").on("click", ".del",
+          function () {
+        var button = $(this);
+
+        //alert(button.attr("data-emp-id"));
+        bootbox.confirm({
+
+            message: "هل انت متأكد انك تريد حذف هذا العنصر؟",
+            callback: function (result) {
+                /* result is a boolean; true = OK, false = Cancel*/
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteUser","User")",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: button.attr("data-emp-id")
+                        },
+                        success: function (data) {
+                            table.row(button.parent().parent().parent().parent().parent().parent()).remove().draw();
+                            toastr.warning("تم حذف العنصر");
+                        },
+                        error: function (data) {
+                            bootbox.alert("Error on server");
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+    });
+
+
+
+    $("#mytable").on("click", ".blockUser",
+         function () {
+        var button = $(this);
+
+        //alert(button.attr("data-emp-id"));
+        bootbox.confirm({
+
+            message: "هل انت متأكد ؟",
+            callback: function (result) {
+                /* result is a boolean; true = OK, false = Cancel*/
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("BlockUser","User")",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            id: button.attr("data-emp-id")
+                        },
+                        success: function (data) {
+                            var myid = "#" + data.id;
+                            $(myid).empty();
+                            if (data.status) {
+                                $(myid).append('<span class="label label-success"style="width:70px">فعال</span>');
+                                toastr.warning("تم الغاء حظر المستخدم");
+                                button.text(" حظر");
+                            } else {
+                                $(myid).append('<span class="label label-danger"style="width:70px">غير فعال</span>');
+                                toastr.warning("تم  حظر المستخدم");
+                                button.text("الغاء حظر");
+                            }
+
+
+                        },
+                        error: function (data) {
+                            bootbox.alert("Error on server");
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+    });
+
+
+    $("#mytable").on("click", ".Edit",
+           function () {
+               var button = $(this);
+
+               window.location.href = "@Url.Action("EditUser", "User")/" + button.attr("data-emp-id");
+
+           });
+    
+    $("#goUser").click(function () {
+
+    window.location.href ="@Url.Action("AddUser","User")" ;
+
+    });
+
+});
+
+
+
+</script>

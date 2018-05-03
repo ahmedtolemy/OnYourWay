@@ -132,12 +132,19 @@
                                     <a href="#"><i class="icon-people"></i> <span>المستخدمين</span></a>
                                     <ul>
                                         <li id="ShowAdmins"><a href="@Url.Action("Index","Admin")">المدراء</a></li>
+                                        <li id="ShowUsers"><a href="@Url.Action("Index","User")">المستخدمين</a></li>
                                         <li id="ShowProviders"><a href="@Url.Action("Index","Client")">مقدمين الخدمة</a></li>
                                         <li id="ShowClients"><a href="@Url.Action("Index","Customer")">الزبائن</a></li>
                                     </ul>
                                 </li>
                                 <li id="showategories"><a href="@Url.Action("Index","Category")"><i class="fa fa-clone"></i> <span>الاقسام</span></a></li>
-                                <li id="showDepts"><a href="@Url.Action("Index","Car")"><i class="icon-car"></i> <span>السيارات</span></a></li>
+                                <li id="showDepts">
+                                    <a href="#"><i class="icon-car"></i> <span>السيارات</span></a>
+                                    <ul>
+                                        <li id="ShowCars"><a href="@Url.Action("Index","Car")">السيارات</a></li>
+                                        <li id="ShowUsersCars"><a href="@Url.Action("ClientCar","Car")">سيارات مقدمين الخدمة</a></li>
+                                    </ul>
+                                </li>
                                 <li id="cities"><a href="@Url.Action("Index","City")"><i class="icon-location3"></i> <span>المدن</span></a></li>
                                 <li id="orders">
                                     <a href="#"><i class="icon-stack"></i> <span>الطلبات</span></a>
