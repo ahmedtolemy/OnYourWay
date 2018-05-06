@@ -51,7 +51,7 @@
                             <td id="@item.Id"><span class="label label-danger" style="width:70px">غير فعال</span></td>
                         }
                             <td>
-                                <button class="btn btn-primary  Subscription" data-emp-id="@item.Id"> تعديل الاشتراك</button>
+                                <button class="btn btn-primary  Subscription" data-toggle="modal" data-target="#myModal-@item.Id" data-emp-id="@item.Id"> تعديل الاشتراك</button>
                                 <div id="myModal-@item.Id" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </td>
-                        <td><button class="btn btn-primary  Edit" data-emp-id="@item.Id"> تعديل</button></td>
+                        <td><button class="btn btn-primary  Edit"  data-emp-id="@item.Id"> تعديل</button></td>
                         <td>
                             <ul class="icons-list">
                                 <li class="dropdown">
@@ -132,8 +132,8 @@ $(document).ready(function () {
     $("#users").addClass("active");
     $("#ShowUsers,#ShowUsers>ul>li:nth-child(1)").addClass("active");
 
-    var table= $("#mytable").DataTable();
-
+    var table = $("#mytable").DataTable();
+    $("#mytable").parent().removeClass("datatable-scroll-wrap");
     $(document).on("click", ".btnEditCity", function () {
 
                 var btn = $(this);

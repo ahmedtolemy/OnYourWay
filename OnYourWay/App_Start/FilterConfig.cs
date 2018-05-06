@@ -9,7 +9,7 @@ namespace OnYourWay
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new AuthorizeAttribute());
-            filters.Add(new AuthorizeAttribute() { Roles = "Admin, Manager" });
+            filters.Add(new AuthorizeAttribute() { Roles = "Admin, Manager,User" });
           
         }
        

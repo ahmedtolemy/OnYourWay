@@ -126,10 +126,7 @@ namespace OnYourWay.Controllers
 
                         var rol = CurrentUser.Roles.FirstOrDefault();
                         string rolName = db.Roles.Find(rol.RoleId).Name;
-                        if (rolName == "Admin" || rolName == "Fcounter")
-                        {
                             return Json(new { success = true, errors = lstErrors, admin = true, url = returnUrl }, JsonRequestBehavior.AllowGet);
-                        }
                     }
 
 

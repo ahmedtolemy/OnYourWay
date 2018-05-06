@@ -10,9 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
+using OnYourWay.Models.Extensisons;
 namespace OnYourWay.Controllers
 {
+    [Authorize(Roles = "Manager,Admin,User")]
+   
     public class UserController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -28,6 +30,7 @@ namespace OnYourWay.Controllers
             }
         }
         // GET: User
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult Index()
         {
             using (ApplicationDbContext db=new ApplicationDbContext() )
@@ -43,10 +46,12 @@ namespace OnYourWay.Controllers
             }
            
         }
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult AddUser()
         {
             return View();
         }
+        [Authorize(Roles = "Manager,Admin")]
         [HttpPost]
         public ActionResult BlockUser(string id)
         {
@@ -68,6 +73,7 @@ namespace OnYourWay.Controllers
             }
 
         }
+        [Authorize(Roles = "Manager,Admin")]
         [HttpPost]
         public ActionResult DeleteUser(string id)
         {
@@ -84,8 +90,6 @@ namespace OnYourWay.Controllers
         {
             if (id != null)
             {
-
-
                 using (ApplicationDbContext db = new Models.ApplicationDbContext())
                 {
                     var user = db.Users.Find(id);
@@ -101,6 +105,7 @@ namespace OnYourWay.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+        [Authorize(Roles = "Manager,Admin")]
         public ActionResult EditSub(string id,string count,string balance)
         {
             if (id != null)
@@ -119,6 +124,7 @@ namespace OnYourWay.Controllers
 
         }
         [HttpPost]
+     
         public ActionResult EditUserData(AdminModel model)
         {
             using (ApplicationDbContext db = new Models.ApplicationDbContext())
@@ -177,7 +183,7 @@ namespace OnYourWay.Controllers
             }
         }
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Manager,Admin")]
         public async Task<ActionResult> RegisterUser(RegisterViewModel model)
         {
             List<string> lstErrors = new List<string>();

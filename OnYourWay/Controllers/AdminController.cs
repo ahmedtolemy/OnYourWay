@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace OnYourWay.Controllers
 {
+    [Authorize(Roles ="Manager,Admin")]
     public class AdminController : BaseController
     {
         private ApplicationUserManager _userManager;

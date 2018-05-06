@@ -27,6 +27,7 @@ namespace OnYourWay.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             userIdentity.AddClaim(new Claim("ImageUrl", this.ImageUrl.ToString()));
+            userIdentity.AddClaim(new Claim("UserID", this.Id.ToString()));
             return userIdentity;
         }
     }

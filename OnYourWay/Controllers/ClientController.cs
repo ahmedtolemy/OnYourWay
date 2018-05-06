@@ -1,4 +1,5 @@
 ﻿using OnYourWay.Models;
+using OnYourWay.Models.DBTables;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,6 +9,8 @@ using System.Web.Mvc;
 
 namespace OnYourWay.Controllers
 {
+
+    [Authorize(Roles = "Manager,Admin,User")]
     public class ClientController : BaseController
     {
         // GET: Client
@@ -15,9 +18,21 @@ namespace OnYourWay.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var Clients = db.Clients.Where(a => a.Delete != true).Include(a => a.Ratings)
+                List<Client> Clients = new List<Client>(); 
+                if (!User.IsInRole("User"))
+                {
+
+                
+                 Clients = db.Clients.Where(a => a.Delete != true).Include(a => a.Ratings)
                     .OrderByDescending(a => a.RegisterDate)
                     .ToList();
+                }
+                else
+                {
+                     Clients = db.Clients.Where(a => a.Delete != true&&a.User!=null&&a.User.UserName==User.Identity.Name).Include(a => a.Ratings)
+                   .OrderByDescending(a => a.RegisterDate)
+                   .ToList();
+                }
                 return View(Clients);
             }
 

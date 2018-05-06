@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace OnYourWay.Controllers
 {
+    [Authorize(Roles = "Manager,Admin")]
     public class CategoryController : BaseController
     {
         // GET: Category
