@@ -14,6 +14,7 @@ namespace OnYourWay.Controllers
     public class BaseController : Controller
     {
         #region Enums
+        public enum SubscribType {Monthly=0,Money=1 }
         public enum Category {People=1,Box=2,Goods=3,Animal=4,Shipping=5,People_Box=6,Goods_Animals=7};
         public enum peopleType {Person=1,Family=2 }
         public enum AnimalType { Animal = 1, Feed = 2 }

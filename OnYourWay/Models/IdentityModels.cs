@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -20,7 +21,10 @@ namespace OnYourWay.Models
         public int? Subscription_count { get; set; }
         public DateTime RegisterDate { get; set; }
         public List<Client> Clients { get; set; }
+        [InverseProperty("user")]
         public List<Subscription> Subscriptions { get; set; }
+        [InverseProperty("Admin")]
+        public List<Subscription> AdminSubscriptions { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -46,6 +50,7 @@ namespace OnYourWay.Models
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Complain> Complains { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+       
         public virtual DbSet<Subscription> Subscriptions { get; set; }
 
         public ApplicationDbContext()

@@ -226,6 +226,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\SubscriptionController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,6 +239,10 @@
     <Compile Include="Migrations\201804181503410_keys.cs" />
     <Compile Include="Migrations\201804181503410_keys.Designer.cs">
       <DependentUpon>201804181503410_keys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805070931287_subscription.cs" />
+    <Compile Include="Migrations\201805070931287_subscription.Designer.cs">
+      <DependentUpon>201805070931287_subscription.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2637,8 +2642,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\circle.css" />
+    <Content Include="Content\css\bootstrap-datetimepicker-standalone.css" />
+    <Content Include="Content\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\awameer.png" />
@@ -2671,6 +2679,16 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Scripts\datepicker\bootstrap-datetimepicker-standalone.css" />
+    <Content Include="Scripts\datepicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\datepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\datepicker\bootstrap.min.js" />
+    <Content Include="Scripts\datepicker\font-awesome.css" />
+    <Content Include="Scripts\datepicker\font-awesome.min.css" />
+    <Content Include="Scripts\datepicker\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\datepicker\moment-with-locales.js" />
+    <Content Include="Scripts\datepicker\script.js" />
+    <Content Include="Scripts\datepicker\style.css" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -4786,6 +4804,7 @@
     <Content Include="Views\User\AddUser.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\Car\ClientCar.cshtml" />
+    <Content Include="Views\Subscription\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4812,6 +4831,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804181503410_keys.resx">
       <DependentUpon>201804181503410_keys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805070931287_subscription.resx">
+      <DependentUpon>201805070931287_subscription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

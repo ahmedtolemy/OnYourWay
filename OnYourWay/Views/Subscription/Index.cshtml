@@ -1,0 +1,248 @@
+﻿@model Tuple<List<OnYourWay.Models.DBTables.Client>, List<OnYourWay.Models.DBTables.Subscription>>
+<html>
+<head>
+    <title>الاشتراكات</title>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <input style="display:inline-block;width:auto;"  type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info" value="اضافة اشتراك" />
+            <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
+                <thead class="bg-info-700">
+                    <tr>
+                        <th>اسم العميل</th>
+                        <th>رصيد العميل</th>
+                        <th>نوع الاشتراك</th>
+                        <th>بداية الاشتراك</th>
+                        <th>نهاية الاشتراك</th>
+                        <th>الرصيد</th>
+                        <th>الحالة</th>
+                        <th>تغير الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="mylst">
+                    @foreach (var item in Model.Item2)
+                    {
+                        <tr>
+                            <td>@item.Client.Name</td>
+                            <td>@item.Client.Balance</td>
+                            <td>@(item.Type == 0 ? "شهري" : "نقدي")</td>
+                            <td>@(item.Start != null?((DateTime)item.Start).ToShortDateString():"")</td>
+                            <td>@(item.End != null ? ((DateTime)item.End).ToShortDateString() : "")</td>
+                            <td>@item.Balance</td>
+                            @if (item.Block == true)
+                            {
+                                <td id="@item.ID"><span class="label label-danger" style="width:70px">غير مفعلة</span></td>
+                            }
+                            else
+                            {
+                                <td id="@item.ID"><span class="label label-success" style="width:70px">مفعلة</span></td>
+                            }
+                            <td>
+
+                                <ul class="icons-list">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="icon-menu9"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-right" style="text-align:center">
+                                            <li><button class="btn btn-danger  del" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حذف</button></li>
+                                            @if (item.Block == true)
+                                            {
+                                                <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">تفعيل</button></li>
+                                            }
+                                            else
+                                            {
+                                                <li><button class="btn btn-danger  blockUser" style="width:80px;background-color:white;color:black" data-emp-id="@item.ID">حظر</button></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">اضافة اشتراك</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal UserForm" action="#">
+                        <fieldset class="content-group">
+                            <div class="form-group">
+                                <label class="control-label col-lg-2"> العميل </label>
+                                <div class="col-lg-10">
+                                    <input class="form-control" id="client" list="clients" name="client"/>
+                                    <datalist id="clients">
+                                        @foreach (var item in Model.Item1)
+                                        {
+                                            <option id="@item.ID" value="@(item.Name+"-"+item.Mobile)"/>
+                                        }
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2"> نوع الاشتراك </label>
+                                <div class="col-lg-10">
+                                    <select id="cityNameAr" class="form-control" name="cityNameAr">
+                                        <option value="0">شهري</option>
+                                        <option value="1">نقدي</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">عدد الشهور</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control" name="cityNameEn" id="cityNameEn">
+                                        <option value="1">1</option>
+                                        <option value="3">3</option>
+                                        <option value="6">6</option>
+                                        <option value="9">9</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">المبلغ</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" name="cityNameOr" id="cityNameOr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" style="width: 165px;margin-right: 70px;" id="btnCity" class="btn btn-success" value="اضافة اشتراك" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/Additional-methods.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $("#btnCity").click(function () {
+                if ($('#clients').find('option[value="' + $("#client").val() + '"]').val() != undefined) {
+                    if ($("#cityNameOr").val().match(/^\d+$/)) {
+                         $.ajax({
+                            url: '@Url.Action("Add","Subscription")',
+                            type: "GET",
+                            dataType: "json",
+                             data: {
+                                clientid: $('#clients').find('option[value="' + $("#client").val() + '"]').attr('id'),
+                                nameAr:   $("#cityNameAr").val(),
+                                nameEn:   $("#cityNameEn").val(),
+                                nameOr:   $("#cityNameOr").val(),
+                            },
+                            success: function () {
+                                location.reload();
+                            }
+                        }) 
+                    } else {
+                        toastr.warning("المبلغ ارقام فقط");
+                    }
+                } else {
+                    toastr.warning("اختيار خطا للعميل");
+                }
+
+            });
+            var table = $("#mytable").DataTable();
+            $("#cityNameAr").change(function () {
+                debugger;
+                if (this.value==1) {
+                    $("#cityNameEn").prop("disabled", true);
+                } else {
+                    $("#cityNameEn").prop("disabled", false);   
+                }
+            });
+            $("#mytable").on("click", ".blockUser",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Block","Subscription")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        var myid = "#" + data.id;
+                                        $(myid).empty();
+                                        if (data.status) {
+                                            $(myid).append('<span class="label label-danger"style="width:70px">غير مفعلة</span>');
+                                            toastr.warning("تم  حظر المستخدم");
+                                            button.text("الغاء حظر");
+                                        } else {
+
+                                            $(myid).append('<span class="label label-success"style="width:70px">مفعلة</span>');
+                                            toastr.warning("تم الغاء حظر المستخدم");
+                                            button.text(" حظر");
+                                        }
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+                });
+            $("#mytable").on("click", ".del",
+                function () {
+                    var button = $(this);
+
+                    //alert(button.attr("data-emp-id"));
+                    bootbox.confirm({
+
+                        message: "هل انت متأكد ؟",
+                        callback: function (result) {
+                            /* result is a boolean; true = OK, false = Cancel*/
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("Delete", "Subscription")',
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: button.attr("data-emp-id")
+                                    },
+                                    success: function (data) {
+                                        location.reload();
+
+                                    },
+                                    error: function (data) {
+                                        bootbox.alert("Error on server");
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+                });
+
+        });
+
+    </script>
+</body>
+</html>

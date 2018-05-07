@@ -1,0 +1,115 @@
+/*--------------------------------------
+*********** START RESET ***********
+--------------------------------------*/
+
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline: none !important;
+}
+
+@font-face {
+    font-family: 'JF-Flat';
+    src: url('../fonts/JF-Flat-regular.eot');
+    src: url('../fonts/JF-Flat-regular.woff') format('woff'),
+         url('../fonts/JF-Flat-regular.ttf') format('truetype'),
+         url('../fonts/JF-Flat-regular.svg#JF-Flat-regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('../fonts/Roboto-Medium.eot');
+    src: url('../fonts/Roboto-Medium.woff') format('woff'),
+         url('../fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+form.form input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #883fa5;
+}
+form.form input::-moz-placeholder { /* Firefox 19+ */
+  color: #883fa5;
+}
+form.form input:-ms-input-placeholder { /* IE 10+ */
+  color: #883fa5;
+}
+input:-moz-placeholder { /* Firefox 18- */
+  color: #883fa5;
+}
+
+textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #883fa5;
+    font-weight: bold
+}
+textarea::-moz-placeholder { /* Firefox 19+ */
+  color: #883fa5;
+    font-weight: bold
+}
+textarea:-ms-input-placeholder { /* IE 10+ */
+  color: #883fa5;
+    font-weight: bold
+}
+textarea:-moz-placeholder { /* Firefox 18- */
+  color: #883fa5;
+    font-weight: bold
+}
+
+.new-class {
+    display: none;
+}
+
+.no-padding{
+    padding:0px;
+}
+
+
+body {
+    color: #212121;
+    direction: rtl;
+    font: 14px 'JF-Flat', sans-serif;
+    line-height: 1.6em;
+    position: relative;
+    padding-top: 32px;
+    overflow-y: hidden;
+}
+
+
+input{
+    width: 100%;
+    border: 1px solid #DDD;
+    padding: 7px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.input-group.date .input-group-addon {
+    cursor: pointer;
+    position: absolute;
+    z-index: 9;
+    width: auto;
+    border: 0;
+    left: 0;
+    top: 10px;
+    padding: 9px 16px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+
+#datetimepicker1 .bootstrap-datetimepicker-widget,
+#datetimepicker2 .bootstrap-datetimepicker-widget{
+    max-width: 200px
+}
+
+#datetimepicker1 .bootstrap-datetimepicker-widget .glyphicon,
+#datetimepicker2 .bootstrap-datetimepicker-widget .glyphicon{
+    transform: rotate(180deg)
+}
+
+
