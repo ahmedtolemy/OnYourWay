@@ -171,11 +171,10 @@
                                 {
                                     <li><a href="@Url.Action("EditUser","User")/@User.Identity.GetUserID()"><i class="icon-people"></i> <span>تعديل بياناتي</span></a></li>
                                     <li id="users">
-                                        <a href="#"><i class="icon-people"></i> <span>المستخدمين</span></a>
-                                        <ul>
-                                            <li id="ShowProviders"><a href="@Url.Action("Index","Client")">مقدمين الخدمة</a></li>
-                                        </ul>
+                                        <a href="@Url.Action("Index","Client")"><i class="icon-people"></i> <span>المستخدمين</span></a>
                                     </li>
+                                    <li><a href="@Url.Action("Add","Subscription")"><i class="icon-people"></i> <span>الاشتراكات</span></a></li>
+
                                 }
                             </ul>
                         </div>
