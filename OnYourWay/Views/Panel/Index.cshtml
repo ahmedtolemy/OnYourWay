@@ -1,0 +1,129 @@
+﻿@model List<OnYourWay.Models.ApplicationUser>
+<html>
+<head>
+    <title>لوحة تحكم الصفحات</title>
+    <style>
+        .inputs {
+            margin: 4px 0 0;
+            margin-top: 1px \9;
+            line-height: normal;
+            display: inline-block;
+            width: auto;
+            float: right;
+            margin-left: 11px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel panel-flat">
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="clearfix">
+                    <div class="row">
+                        <input class="form-control" id="client" list="clients" name="client" />
+                        <datalist id="clients">
+                            @foreach (var item in Model)
+                            {
+                                <option id="@item.Id" data-user-id="@item.AccessLevel" value="@(item.UserName)" />
+                            }
+                        </datalist>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-xs-6">
+                            <label>الاقسام</label>
+                            <input class="inputs" type="checkbox" value="Category" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>شكاوي</label>
+                            <input class="inputs" type="checkbox" value="Complain" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>سيارات</label>
+                            <input class="inputs" type="checkbox" value="Car" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>مقدم الخدمة</label>
+                            <input class="inputs" type="checkbox" value="Client" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>الاشخاص</label>
+                            <input class="inputs" type="checkbox" value="Customer" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>المتابعين</label>
+                            <input class="inputs" type="checkbox" value="User" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>المديرين</label>
+                            <input class="inputs" type="checkbox" value="Admin" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>الرحلات</label>
+                            <input class="inputs" type="checkbox" value="Trip" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>الاعدادات</label>
+                            <input class="inputs" type="checkbox" value="About" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>المدن</label>
+                            <input class="inputs" type="checkbox" value="City" />
+                        </div>
+                        <div class="col-md-3 col-xs-6">
+                            <label>الطلبات</label>
+                            <input class="inputs" type="checkbox" value="Order" />
+                        </div>
+                    </div>
+                    <div class="row" style="text-align:center;">
+                        <button id="SavePanelbtn" class="btn btn-primary" disabled onclick="SavePanel();">حفظ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var checkboxsPanel = [];
+        function SavePanel() {
+            checkboxsPanel = [];
+            $("input[type = 'checkbox']").each(function (index) {
+                if ($(this).is(':checked')) {
+                    checkboxsPanel.push($(this).val());
+                   
+                }
+               
+            });
+             $.ajax({
+                        url: '@Url.Action("Edit","Panel")',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            clientid: $('#clients').find('option[value="' + $("#client").val() + '"]').attr('id'),
+                            accesslevels: checkboxsPanel
+                        },
+                        success: function () {
+                            location.reload();
+                        }
+                    });
+        }
+        $("#client").keyup( function () {
+            if ($('#clients').find('option[value="' + $("#client").val() + '"]').val() != undefined) {
+                $("#SavePanelbtn").removeAttr('disabled');
+                $("input[type = 'checkbox']").each(function (index) {
+                    if ($('#clients').find('option[value="' + $("#client").val() + '"]').data("user-id").toLowerCase().includes($(this).val().toLowerCase())) {
+                       
+                        $(this).attr('checked', true);
+                    } else {
+                        $(this).removeAttr('checked');
+                    }
+                });
+            } else {
+                $("#SavePanelbtn").attr('disabled', true);
+            }
+        });
+        $(document).ready(function () {
+           
+        })
+    </script>
+</body>
+</html>
+

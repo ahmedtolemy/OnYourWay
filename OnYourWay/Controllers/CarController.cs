@@ -1,5 +1,6 @@
 ﻿using OnYourWay.Models;
 using OnYourWay.Models.DBTables;
+using OnYourWay.Models.Extensisons;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 namespace OnYourWay.Controllers
 {
     [Authorize(Roles = "Manager,Admin")]
+    [AuthorizeUser(AccessLevel = "Car")]
     public class CarController : Controller
     {
         // GET: Car

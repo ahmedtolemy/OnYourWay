@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using OnYourWay.Models;
+using OnYourWay.Models.Extensisons;
 using OnYourWay.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace OnYourWay.Controllers
             }
         }
         // GET: Admin
+        [AuthorizeUser(AccessLevel = "Admin")]
         public ActionResult Index()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -39,10 +41,12 @@ namespace OnYourWay.Controllers
             }
 
         }
+        [AuthorizeUser(AccessLevel = "Admin")]
         public ActionResult AddAdmin()
         {
             return View();
         }
+        [AuthorizeUser(AccessLevel = "Admin")]
         [HttpPost]
         public ActionResult BlockUser(string id)
         {
@@ -64,6 +68,7 @@ namespace OnYourWay.Controllers
             }
 
         }
+        [AuthorizeUser(AccessLevel = "Admin")]
         [HttpPost]
         public ActionResult DeleteUser(string id)
         {
@@ -181,6 +186,7 @@ namespace OnYourWay.Controllers
                 Active = true,
                 Deleted = false,
                 PhoneNumber = model.phone,
+                AccessLevel=",",
                 RegisterDate = DateTime.Now
             };
 

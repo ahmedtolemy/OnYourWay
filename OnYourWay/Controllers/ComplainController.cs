@@ -1,4 +1,5 @@
 ﻿using OnYourWay.Models;
+using OnYourWay.Models.Extensisons;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 namespace OnYourWay.Controllers
 {
     [Authorize(Roles = "Manager,Admin")]
+    [AuthorizeUser(AccessLevel = "Complain")]
     public class ComplainController : BaseController
     {
         // GET: Complain

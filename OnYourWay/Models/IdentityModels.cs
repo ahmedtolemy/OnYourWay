@@ -18,6 +18,7 @@ namespace OnYourWay.Models
         public bool Deleted { get; set; }
         public bool Active { get; set; }
         public string Balance { get; set; }
+        public string AccessLevel { get; set; }
         public int? Subscription_count { get; set; }
         public DateTime RegisterDate { get; set; }
         public List<Client> Clients { get; set; }
@@ -30,8 +31,9 @@ namespace OnYourWay.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
-            userIdentity.AddClaim(new Claim("ImageUrl", this.ImageUrl.ToString()));
-            userIdentity.AddClaim(new Claim("UserID", this.Id.ToString()));
+            userIdentity.AddClaim(new Claim("ImageUrl", this.ImageUrl));
+            userIdentity.AddClaim(new Claim("UserID", this.Id));
+            userIdentity.AddClaim(new Claim("AccessLevel", this.AccessLevel));
             return userIdentity;
         }
     }

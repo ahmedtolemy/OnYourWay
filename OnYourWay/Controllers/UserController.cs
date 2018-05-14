@@ -31,6 +31,7 @@ namespace OnYourWay.Controllers
         }
         // GET: User
         [Authorize(Roles = "Manager,Admin")]
+        [AuthorizeUser(AccessLevel = "User")]
         public ActionResult Index()
         {
             using (ApplicationDbContext db=new ApplicationDbContext() )
@@ -47,6 +48,7 @@ namespace OnYourWay.Controllers
            
         }
         [Authorize(Roles = "Manager,Admin")]
+        [AuthorizeUser(AccessLevel = "User")]
         public ActionResult AddUser()
         {
             return View();
@@ -208,6 +210,7 @@ namespace OnYourWay.Controllers
                 Active = true,
                 Deleted = false,
                 PhoneNumber = model.phone,
+                AccessLevel=",",
                 RegisterDate = DateTime.Now
             };
 

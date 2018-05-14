@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnYourWay.Models.Extensisons;
 
 namespace OnYourWay.Controllers
 {
     [Authorize(Roles = "Manager,Admin")]
+    [AuthorizeUser(AccessLevel ="About")]
     public class AboutController : BaseController
     {
         // GET: About

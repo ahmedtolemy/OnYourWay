@@ -34,6 +34,7 @@ namespace OnYourWay.Controllers
         public enum PersonType {
             Client =1,Customer=2,Company=3 }
         #endregion
+       
         public string TripStatusName(string lang,int? status)
         {
             switch (status)

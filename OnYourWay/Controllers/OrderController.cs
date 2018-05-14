@@ -1,5 +1,6 @@
 ﻿using OnYourWay.Models;
 using OnYourWay.Models.DBTables;
+using OnYourWay.Models.Extensisons;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,6 +10,8 @@ using System.Web.Mvc;
 
 namespace OnYourWay.Controllers
 {
+
+    [AuthorizeUser(AccessLevel = "Order")]
     public class OrderController : BaseController
     {
         // GET: Order
