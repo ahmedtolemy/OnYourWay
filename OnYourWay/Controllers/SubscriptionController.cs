@@ -18,9 +18,8 @@ namespace OnYourWay.Controllers
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var userid = User.Identity.GetUserID();
-                var clients = db.Clients.Where(a => a.Delete != true && (a.UserID == null || a.UserID == userid)).ToList();
+                var clients = db.Clients.Where(a => a.Delete != true &&  a.UserID == userid).ToList();
                 var subscrib = db.Subscriptions.Where(a => a.AdminID == null && a.userID == userid&&a.Delete!=true).Include(a => a.Client).ToList();
-
                 return View(new Tuple<List<Client>, List<Subscription>>(clients, subscrib));
             }
         }
@@ -28,8 +27,13 @@ namespace OnYourWay.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+               // var client = db.Clients.Where(a => a.ID == clientid).FirstOrDefault();
                 var userid = User.Identity.GetUserID();
                 var months = int.Parse(nameEn);
+                //if (client!=null)
+                //{
+                //    client.UserID = userid;
+                //}
                 Subscription City = new Subscription()
                 {
                     userID = userid,

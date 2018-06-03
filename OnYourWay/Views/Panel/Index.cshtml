@@ -20,7 +20,7 @@
             <div class="container-fluid">
                 <div class="clearfix">
                     <div class="row">
-                        <input class="form-control" id="client" list="clients" name="client" />
+                        <input class="form-control" id="client" list="clients" placeholder="اختر مدير" name="client" />
                         <datalist id="clients">
                             @foreach (var item in Model)
                             {
@@ -28,52 +28,91 @@
                             }
                         </datalist>
                     </div>
+                    <br />
+                    <br />
                     <div class="row">
                         <div class="col-md-3 col-xs-6">
-                            <label>الاقسام</label>
-                            <input class="inputs" type="checkbox" value="Category" />
+                            <label class="all-input">
+                                الاقسام
+                                <input class="inputs" type="checkbox" value="Category" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>شكاوي</label>
-                            <input class="inputs" type="checkbox" value="Complain" />
+                            <label class="all-input">
+                                شكاوي
+                                <input class="inputs" type="checkbox" value="Complain" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>سيارات</label>
-                            <input class="inputs" type="checkbox" value="Car" />
+                            <label class="all-input">
+                                سيارات
+                                <input class="inputs" type="checkbox" value="Car" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>مقدم الخدمة</label>
-                            <input class="inputs" type="checkbox" value="Client" />
+                            <label class="all-input">
+                                مقدم الخدمة
+                                <input class="inputs" type="checkbox" value="Client" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>الاشخاص</label>
-                            <input class="inputs" type="checkbox" value="Customer" />
+                            <label class="all-input">
+                                الاشخاص
+                                <input class="inputs" type="checkbox" value="Customer" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>المتابعين</label>
-                            <input class="inputs" type="checkbox" value="User" />
+                            <label class="all-input">
+                                المتابعين
+                                <input class="inputs" type="checkbox" value="User" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>المديرين</label>
-                            <input class="inputs" type="checkbox" value="Admin" />
+                            <label class="all-input">
+                                المديرين
+                                <input class="inputs" type="checkbox" value="Admin" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>الرحلات</label>
-                            <input class="inputs" type="checkbox" value="Trip" />
+                            <label class="all-input">
+                                الرحلات
+                                <input class="inputs" type="checkbox" value="Trip" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>الاعدادات</label>
-                            <input class="inputs" type="checkbox" value="About" />
+                            <label class="all-input">
+                                الاعدادات
+                                <input class="inputs" type="checkbox" value="About" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>المدن</label>
-                            <input class="inputs" type="checkbox" value="City" />
+                            <label class="all-input">
+                                المدن
+                                <input class="inputs" type="checkbox" value="City" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="col-md-3 col-xs-6">
-                            <label>الطلبات</label>
-                            <input class="inputs" type="checkbox" value="Order" />
+                            <label class="all-input">
+                                الطلبات
+                                <input class="inputs" type="checkbox" value="Order" />
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                     </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <div class="row" style="text-align:center;">
                         <button id="SavePanelbtn" class="btn btn-primary" disabled onclick="SavePanel();">حفظ</button>
                     </div>

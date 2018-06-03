@@ -1,4 +1,4 @@
-﻿@model List<OnYourWay.Models.ApplicationUser>
+﻿@model Tuple<List<OnYourWay.Models.ApplicationUser>, List<OnYourWay.Models.DBTables.Client>>
 @{
 
 }
@@ -11,7 +11,7 @@
 
     <div class="panel-body">
 
-        <input style="right: 30px;" type="button" id="goUser" class="btn btn-info" value="اضافة مدير جديد" />
+        <input style="width:100px;" type="button" id="goUser" class="btn btn-info" value="اضافة مدير جديد" />
 
         <table id="mytable" class="table datatable-responsive table-bordered table-striped table-hover">
             <thead class="bg-info-700">
@@ -24,12 +24,13 @@
                     <th>عدد الاشتراكات</th>
                     <th>الحالة</th>
                     <th>تعديل الاشتراكات</th>
+                    <th>اضافة مقدمين خدمة</th>
                     <th> تعديل</th>
                     <th>تغير الحالة</th>
                 </tr>
             </thead>
             <tbody id="mylst">
-                @foreach (var item in Model)
+                @foreach (var item in Model.Item1)
                 {
                     <tr>
                         <td style="text-align:center"><img class="img-circle" style="width:70px;height:70px;" src="~/Content/userImages/@item.ImageUrl" /></td>
@@ -50,49 +51,98 @@
                         {
                             <td id="@item.Id"><span class="label label-danger" style="width:70px">غير فعال</span></td>
                         }
-                            <td>
-                                <button class="btn btn-primary  Subscription" data-toggle="modal" data-target="#myModal-@item.Id" data-emp-id="@item.Id"> تعديل الاشتراك</button>
-                                <div id="myModal-@item.Id" class="modal fade" role="dialog">
-                                    <div class="modal-dialog">
+                        <td>
+                            <button class="btn btn-primary  Subscription" data-toggle="modal" data-target="#myModal-@item.Id" data-emp-id="@item.Id"> تعديل الاشتراك</button>
+                            <div id="myModal-@item.Id" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">تعديل الاشتراك</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form class="form-horizontal EditForm" action="#">
-                                                    <fieldset class="content-group">
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-2">عدد الاشتراكات </label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control citNamAr-@item.Id" value="@item.Subscription_count">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-2">المحفظة </label>
-                                                            <div class="col-lg-10">
-                                                                <input type="text" class="form-control citNamEn-@item.Id" value="@item.Balance">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="button" style="width: 165px;margin-right: 70px;" class="btn btn-success btnEditCity" data-id="@item.Id" value="تعديل الاشتراك" />
-                                                        </div>
-
-                                                    </fieldset>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">تعديل الاشتراك</h4>
                                         </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal EditForm" action="#">
+                                                <fieldset class="content-group">
 
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">عدد الاشتراكات </label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control citNamAr-@item.Id" value="@item.Subscription_count">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">المحفظة </label>
+                                                        <div class="col-lg-10">
+                                                            <input type="text" class="form-control citNamEn-@item.Id" value="@item.Balance">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="button" style="width: 165px;margin-right: 70px;" class="btn btn-success btnEditCity" data-id="@item.Id" value="تعديل الاشتراك" />
+                                                    </div>
+
+                                                </fieldset>
+                                            </form>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </td>
-                        <td><button class="btn btn-primary  Edit"  data-emp-id="@item.Id"> تعديل</button></td>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary  Subscription" data-toggle="modal" data-target="#myModals-@item.Id" data-emp-id="@item.Id"> مقدمين الخدمة</button>
+                            <div id="myModals-@item.Id" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button style="color:red;" type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">اضافة مقدمين خدمة</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal EditForm cliform">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <fieldset class="content-group">
+                                                            <div class="form-group">
+                                                                @*<label class="control-label col-lg-2">اختر مقدم الخدمة </label>*@
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <input class="form-control" placeholder="اختر مقدم الخدمة" id="@("client"+item.Id)" list="@("clients"+item.Id)" name="client" />
+                                                                    <datalist id="@("clients"+item.Id)">
+                                                                        @foreach (var items in Model.Item2)
+                                                                        {
+                                                                            <option id="@items.ID" value="@(items.Name+"-"+items.Mobile)" />
+                                                                        }
+                                                                    </datalist>
+                                                                </div>
+                                                                <div class="col-sm-6 col-xs-12">
+                                                                    <div class="col-6">
+                                                                        <ul id="addclients-@item.Id" class="list-group list-group-2">
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                <div class="form-group">
+                                                                    <button style="width: 165px;margin-right: 70px;" data-id="@item.Id" class="btn btn-primary btn-addcli">اضافة</button>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="button" style="width: 165px;margin-right: 70px;" class="btn btn-success btnaddclient" data-id="@item.Id" value="حفظ البيانات" />
+                                                                </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td><button class="btn btn-primary  Edit" data-emp-id="@item.Id"> تعديل</button></td>
                         <td>
                             <ul class="icons-list">
                                 <li class="dropdown">
@@ -126,145 +176,196 @@
 
 
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $("#users>ul").css("display", "block");
-    $("#users").addClass("active");
-    $("#ShowUsers,#ShowUsers>ul>li:nth-child(1)").addClass("active");
+        $("#users>ul").css("display", "block");
+        $("#users").addClass("active");
+        $("#ShowUsers,#ShowUsers>ul>li:nth-child(1)").addClass("active");
 
-    var table = $("#mytable").DataTable();
-    $("#mytable").parent().removeClass("datatable-scroll-wrap");
-    $(document).on("click", ".btnEditCity", function () {
+        var table = $("#mytable").DataTable();
+        $("#mytable").parent().removeClass("datatable-scroll-wrap");
+        $(document).on("click", ".btnEditCity", function () {
 
-                var btn = $(this);
-                var inputIDA = ".citNamAr-" + btn.attr("data-id");
-                var inputIDE = ".citNamEn-" + btn.attr("data-id");
+            var btn = $(this);
+            var inputIDA = ".citNamAr-" + btn.attr("data-id");
+            var inputIDE = ".citNamEn-" + btn.attr("data-id");
+            $.ajax({
+                url: '@Url.Action("EditSub","User")',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    id: btn.attr("data-id"),
+                    count: $(inputIDA).val(),
+                    balance: $(inputIDE).val()
+                },
+                success: function () {
+                    location.reload();
+                }
+            })
+
+        });
+        $(document).on("click", ".btnaddclient", function () {
+            var btn = $(this);
+            var ul = $("#addclients-" + btn.attr("data-id"));
+            var list = [];
+            ul.children().each(function () {
+                list.push($(this).attr('id').match(/\d/g).join(''));
+            })
+            if (list.length>0) {
                 $.ajax({
-                    url: '@Url.Action("EditSub","User")',
-                    type: "GET",
+                    url: '@Url.Action("AddClients","User")',
+                    type: "POST",
                     dataType: "json",
                     data: {
                         id: btn.attr("data-id"),
-                        count: $(inputIDA).val(),
-                        balance: $(inputIDE).val()
+                        listid: list
                     },
                     success: function () {
                         location.reload();
+                    },
+                    error: function (data) {
+                        bootbox.alert("Error on server");
                     }
-                })
+                });
+            } else {
+                toastr.warning("لم يتم اختيار مقدم خدمة");
+            }
+        });
+
+        $("#mytable").on("click", ".del",
+            function () {
+                var button = $(this);
+
+                //alert(button.attr("data-emp-id"));
+                bootbox.confirm({
+
+                    message: "هل انت متأكد انك تريد حذف هذا العنصر؟",
+                    callback: function (result) {
+                        /* result is a boolean; true = OK, false = Cancel*/
+                        if (result) {
+                            $.ajax({
+                                url: "@Url.Action("DeleteUser","User")",
+                                type: "POST",
+                                dataType: "json",
+                                data: {
+                                    id: button.attr("data-emp-id")
+                                },
+                                success: function (data) {
+                                    table.row(button.parent().parent().parent().parent().parent().parent()).remove().draw();
+                                    toastr.warning("تم حذف العنصر");
+                                },
+                                error: function (data) {
+                                    bootbox.alert("Error on server");
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+
+
+
+
+
+
 
             });
 
 
-    $("#mytable").on("click", ".del",
-          function () {
-        var button = $(this);
 
-        //alert(button.attr("data-emp-id"));
-        bootbox.confirm({
+        $("#mytable").on("click", ".blockUser",
+            function () {
+                var button = $(this);
 
-            message: "هل انت متأكد انك تريد حذف هذا العنصر؟",
-            callback: function (result) {
-                /* result is a boolean; true = OK, false = Cancel*/
-                if (result) {
-                    $.ajax({
-                        url: "@Url.Action("DeleteUser","User")",
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            id: button.attr("data-emp-id")
-                        },
-                        success: function (data) {
-                            table.row(button.parent().parent().parent().parent().parent().parent()).remove().draw();
-                            toastr.warning("تم حذف العنصر");
-                        },
-                        error: function (data) {
-                            bootbox.alert("Error on server");
+                //alert(button.attr("data-emp-id"));
+                bootbox.confirm({
+
+                    message: "هل انت متأكد ؟",
+                    callback: function (result) {
+                        /* result is a boolean; true = OK, false = Cancel*/
+                        if (result) {
+                            $.ajax({
+                                url: "@Url.Action("BlockUser","User")",
+                                type: "POST",
+                                dataType: "json",
+                                data: {
+                                    id: button.attr("data-emp-id")
+                                },
+                                success: function (data) {
+                                    var myid = "#" + data.id;
+                                    $(myid).empty();
+                                    if (data.status) {
+                                        $(myid).append('<span class="label label-success"style="width:70px">فعال</span>');
+                                        toastr.warning("تم الغاء حظر المستخدم");
+                                        button.text(" حظر");
+                                    } else {
+                                        $(myid).append('<span class="label label-danger"style="width:70px">غير فعال</span>');
+                                        toastr.warning("تم  حظر المستخدم");
+                                        button.text("الغاء حظر");
+                                    }
+
+
+                                },
+                                error: function (data) {
+                                    bootbox.alert("Error on server");
+                                }
+                            });
+
                         }
-                    });
+                    }
+                });
 
-                }
-            }
+
+
+
+
+
+
+
+            });
+
+
+        $("#mytable").on("click", ".Edit",
+            function () {
+                var button = $(this);
+
+                window.location.href = "@Url.Action("EditUser", "User")/" + button.attr("data-emp-id");
+
+            });
+
+        $("#goUser").click(function () {
+
+            window.location.href = "@Url.Action("AddUser","User")";
+
         });
+        $("#mytable").on("click", ".btn-addcli",
+            function () {
+                $('.cliform').submit(false);
+                var btn = $(this);
+                if ($('#clients' + btn.attr("data-id")).find('option[value="' + $("#client" + btn.attr("data-id")).val() + '"]').val() != undefined) {
+                    var ul = $("#addclients-" + btn.attr("data-id"));
+                    var cid = $('#clients' + btn.attr("data-id")).find('option[value="' + $("#client" + btn.attr("data-id")).val() + '"]').attr('id');
+                    ul.append('<li id="li' + cid + '"><button id="' + cid + '" style="color:red;" onclick="deleteuser(this);" data-id="' + btn.attr("data-id")+'" type="button" class="close" >&times;</button>' + $("#client" + btn.attr("data-id")).val() + '</li>');
+                    $('#clients' + btn.attr("data-id")).find('option[value="' + $("#client" + btn.attr("data-id")).val() + '"]').remove();
+                    $("#client" + btn.attr("data-id")).val("");
 
-
-
-
-
-
-
-
-    });
-
-
-
-    $("#mytable").on("click", ".blockUser",
-         function () {
-        var button = $(this);
-
-        //alert(button.attr("data-emp-id"));
-        bootbox.confirm({
-
-            message: "هل انت متأكد ؟",
-            callback: function (result) {
-                /* result is a boolean; true = OK, false = Cancel*/
-                if (result) {
-                    $.ajax({
-                        url: "@Url.Action("BlockUser","User")",
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            id: button.attr("data-emp-id")
-                        },
-                        success: function (data) {
-                            var myid = "#" + data.id;
-                            $(myid).empty();
-                            if (data.status) {
-                                $(myid).append('<span class="label label-success"style="width:70px">فعال</span>');
-                                toastr.warning("تم الغاء حظر المستخدم");
-                                button.text(" حظر");
-                            } else {
-                                $(myid).append('<span class="label label-danger"style="width:70px">غير فعال</span>');
-                                toastr.warning("تم  حظر المستخدم");
-                                button.text("الغاء حظر");
-                            }
-
-
-                        },
-                        error: function (data) {
-                            bootbox.alert("Error on server");
-                        }
-                    });
-
-                }
             }
-        });
+            else {
+                toastr.warning("اختر عميل صحيح");
+            }
+            });
 
-
-
-
-
-
-
-
-    });
-
-
-    $("#mytable").on("click", ".Edit",
-           function () {
-               var button = $(this);
-
-               window.location.href = "@Url.Action("EditUser", "User")/" + button.attr("data-emp-id");
-
-           });
-    
-    $("#goUser").click(function () {
-
-    window.location.href ="@Url.Action("AddUser","User")" ;
-
-    });
 
 });
+    function deleteuser(btn) {
+        var btns = $(btn);
+        debugger;
+        var li = $("#li" + btn.id);
+        $("#clients" + btns.attr("data-id")).append('<option id="' + btn.id + '" value="' + li.contents().not(li.children()).text() + '" />');
+        li.remove();
+
+    }
 
 
 

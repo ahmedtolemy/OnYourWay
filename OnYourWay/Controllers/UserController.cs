@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using OnYourWay.Models.Extensisons;
+using OnYourWay.Models.DBTables;
+
 namespace OnYourWay.Controllers
 {
     [Authorize(Roles = "Manager,Admin,User")]
@@ -39,11 +41,14 @@ namespace OnYourWay.Controllers
                 var users = (from Clients in db.Clients
                              let role = db.Roles.Where(a => a.Name == "User").FirstOrDefault()
                              let admins=db.Users.Where(a=>a.Deleted!=true&&a.Roles.Select(b=>b.RoleId).Contains(role!=null?role.Id:null))
+                             let clients=db.Clients.Where(a=>a.UserID==null)
                  select new
                  {
-                    users=admins.ToList()
+                    users=admins.ToList(),
+                    clients=clients.ToList()
                  }).Take(1).FirstOrDefault();
-                return View(users.users);
+                Tuple<List<ApplicationUser>, List<Client>> user_client = new Tuple<List<ApplicationUser>, List<Client>>(users.users, users.clients);
+                return View(user_client);
             }
            
         }
@@ -252,6 +257,21 @@ namespace OnYourWay.Controllers
             return Json(new { success = false, errors = lstErrors }, JsonRequestBehavior.AllowGet);
 
 
+        }
+        [HttpPost]
+        public ActionResult AddClients(string id,List<int> listid)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var user = db.Users.Where(a => a.Id == id).FirstOrDefault();
+                var clients = db.Clients.Where(a => listid.Contains(a.ID)).ToList();
+                if (clients.Count()>0)
+                {
+                    clients.ForEach(a => a.UserID = user.Id);
+                    db.SaveChanges();
+                }
+            }
+            return Json(new { del = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

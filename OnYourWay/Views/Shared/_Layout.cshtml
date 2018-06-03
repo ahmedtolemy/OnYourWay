@@ -66,28 +66,144 @@
     </script>
 
     <style>
-        .navigation {
+        .content, .navigation {
             overflow-x: auto !important;
             height: 500px !important;
         }
 
-            .navigation::-webkit-scrollbar {
-                width: 2px;
-            }
+        .panel.panel-flat {
+            margin-top: 13px;
+        }
 
-            .navigation::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-            }
+        .navigation::-webkit-scrollbar {
+            width: 2px;
+        }
 
-            .navigation::-webkit-scrollbar-thumb {
-                background-color: darkgrey;
-                outline: 1px solid slategrey;
-            }
+        .content, .navigation::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        }
+
+        ul.list-group-2 {
+            padding: 5px 14px;
+            margin-top: 9px;
+            max-height: 150px;
+            overflow-x: auto;
+        }
+
+        .navigation::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+        }
+
+        .content {
+            outline: 1px solid slategrey;
+        }
+
+        .forn-send {
+            text-align: center;
+            clear: both;
+        }
+        .dataTables_filter > label:after {
+            font-size: 16px;
+            top: 21px;
+        }
+
+        .forn-send input#btnUser {
+            width: 160px;
+        }
+        .all-input {
+            display: block;
+            line-height: 35px;
+            position: relative;
+            padding-right: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .but, button#SavePanelbtn {
+            min-width: 120px;
+        }
+        /* Hide the browser's default checkbox */
+        .all-input input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .block-item.block-item-1, .block-item.block-item-8 {
+            background: #e61a1a;
+        }
+
+        .block-item.block-item-2, .block-item.block-item-7 {
+            background: #0ceaab;
+        }
+
+        .block-item.block-item-3, .block-item.block-item-6, .block-item.block-item-9 {
+            background: #88c440;
+        }
+
+        .block-item.block-item-4, .block-item.block-item-5 {
+            background: #438eb9;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            height: 20px;
+            border-radius: 5px;
+            width: 20px;
+            background-color: #eee;
+        }
+        .panel-body input#goUser, .panel-body input.btn.btn-info {
+            min-width: 120px;
+            display: inline-block;
+            width: auto;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .all-input:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .all-input input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .all-input input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .all-input .checkmark:after {
+            left: 8px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     </style>
 
 
 </head>
-<body style="overflow-x:hidden;font-family: 'Cairo', sans-serif">
+<body style="overflow-x: hidden">
     <div class="loade-fix" style="display:none;">
         <div class="cssload-container">
             <div class="cssload-whirlpool"></div>
@@ -157,7 +273,7 @@
                                     {
                                         <li id="Index"><a href="@Url.Action("Index","Panel")"><i class="glyphicon glyphicon-pawn"></i> <span>تحكم الصفحات</span></a></li>
                                     }
-                                    if (User.IsInRole("Manager") || User.Identity.GetAccessLevel().ToLower().Contains("admin")|| User.Identity.GetAccessLevel().ToLower().Contains("user")|| User.Identity.GetAccessLevel().ToLower().Contains("client")|| User.Identity.GetAccessLevel().ToLower().Contains("customer"))
+                                    if (User.IsInRole("Manager") || User.Identity.GetAccessLevel().ToLower().Contains("admin") || User.Identity.GetAccessLevel().ToLower().Contains("user") || User.Identity.GetAccessLevel().ToLower().Contains("client") || User.Identity.GetAccessLevel().ToLower().Contains("customer"))
                                     {
                                         <li id="users">
                                             <a href="#"><i class="icon-people"></i> <span>المستخدمين</span></a>

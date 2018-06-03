@@ -7,10 +7,79 @@
 
 
     <div class="panel-body">
-
         <form class="form-horizontal UserForm" action="#">
             <fieldset class="content-group">
                 @*<legend class="text-bold">Basic inputs</legend>*@
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"> </label>*@
+                        <div class="col-lg-12">
+                            <input type="file" name="img" id="img" placeholder="صورة المستخدم" value="@Model.pass" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"> </label>*@
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" placeholder="الاسم" name="Viewname" value="@Model.name" id="Viewname">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"></label>*@
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" placeholder="البريد الالكتروني" name="Viewmail" value="@Model.mail" id="Viewmail">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"></label>*@
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" name="phone" placeholder=" رقم الجوال" value="@Model.phone" id="phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"></label>*@
+                        <div class="col-lg-12">
+                            <input type="password" class="form-control" placeholder="كلمة المرور القديمة" name="oldpass" id="oldpass">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"></label>*@
+                        <div class="col-lg-12">
+                            <input type="password" class="form-control" placeholder="كلمة المرور الجديدة" name="Viewpass" id="Viewpass">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        @*<label class="control-label col-lg-2"> </label>*@
+                        <div class="col-lg-12">
+                            <input type="password" class="form-control" placeholder="تاكيد كلمة المرور" name="ViewconPass" id="ViewconPass">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="forn-send">
+                    <input type="button" id="btnUser" class="btn btn-success" value="تعديل المستخدم" />
+                </div>
+
+
+
+
+            </fieldset>
+        </form>
+        @*<form class="form-horizontal UserForm" action="#">
+            <fieldset class="content-group">
+                <legend class="text-bold">Basic inputs</legend>
 
                 <div class="form-group">
                     <label class="control-label col-lg-2">صورة المستخدم </label>
@@ -65,7 +134,7 @@
 
 
             </fieldset>
-        </form>
+        </form>*@
     </div>
 </div>
 
